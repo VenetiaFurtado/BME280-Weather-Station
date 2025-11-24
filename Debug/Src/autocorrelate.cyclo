@@ -1,0 +1,2 @@
+../Src/autocorrelate.c:24:1:autocorrelate_detect_period	20
+../Src/autocorrelate.c:98:5:test_autocorrelate	9

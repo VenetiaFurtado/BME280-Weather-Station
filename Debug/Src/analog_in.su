@@ -1,0 +1,7 @@
+../Src/analog_in.c:23:6:configure_ADC	8	static
+../Src/analog_in.c:65:6:Init_ADC_DMA	16	static
+../Src/analog_in.c:93:6:init_tim1_adc_trigger	8	static
+../Src/analog_in.c:126:6:start_adc_capture	8	static
+../Src/analog_in.c:148:9:is_adc_capture_complete	8	static
+../Src/analog_in.c:160:6:analog_in	8	static
+../Src/analog_in.c:178:6:Init_ADC	8	static

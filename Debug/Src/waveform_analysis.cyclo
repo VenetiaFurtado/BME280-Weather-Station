@@ -1,0 +1,2 @@
+../Src/waveform_analysis.c:35:10:calculate_frequency_autocorrelation	8
+../Src/waveform_analysis.c:97:6:adc_input_analysis	4

@@ -1,0 +1,2 @@
+../Src/waveform_gen.c:20:6:tone_to_samples	48	static
+../Src/waveform_gen.c:44:10:tone_compute_sample_rate	16	static

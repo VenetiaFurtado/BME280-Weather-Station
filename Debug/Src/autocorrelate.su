@@ -1,0 +1,2 @@
+../Src/autocorrelate.c:24:1:autocorrelate_detect_period	64	static
+../Src/autocorrelate.c:98:5:test_autocorrelate	12344	static

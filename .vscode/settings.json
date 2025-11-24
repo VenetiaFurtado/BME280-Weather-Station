@@ -1,0 +1,14 @@
+{
+   "files.associations": {
+      "stm32f091xc.h": "c",
+      "fp_trig.h": "c",
+      "stdint.h": "c",
+      "waveform_gen.h": "c",
+      "cmath": "c",
+      "utilities.h": "c",
+      "compare": "c",
+      "stdio.h": "c",
+      "autocorrelate.h": "c",
+      "waveform_analysis.h": "c"
+   }
+}
