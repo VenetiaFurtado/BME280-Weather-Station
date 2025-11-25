@@ -1,0 +1,6 @@
+../Src/buffer.c:19:6:init_buffer_with_default_val	16	static
+../Src/buffer.c:32:6:is_buffer_empty	16	static
+../Src/buffer.c:44:6:is_buffer_full	16	static
+../Src/buffer.c:76:5:write_to_buffer	16	static
+../Src/buffer.c:100:5:read_from_buffer	16	static
+../Src/buffer.c:125:5:cbfifo_length	16	static

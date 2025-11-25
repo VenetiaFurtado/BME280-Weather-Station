@@ -33,7 +33,21 @@
  **/
 
 #include <stdio.h>
+#include "spi.h"
 
+#define WAIT_TIME_PER_ITERATION          (3000)
+
+
+void delay(volatile unsigned int time_del)
+{
+   //INFO_LOG("Starting delay timer for %d ms", time_del);
+        volatile int n;
+        while (time_del--)
+        {
+                n = WAIT_TIME_PER_ITERATION; /*No. of iterations to give approximate delay in order of milliseconds*/
+                while (n--);
+        }
+}
 
 
 
@@ -45,9 +59,15 @@
  */
 int main(void)
 {
+	Init_SPI2();
+
+	delay(1000);
+
+	printf("hello worled!!\n\r");
 	while(1)
 	{
-		
+		printf("SPI = %x\n\r", spi_read());
+		delay(500);
 	}
 
 	return 0;
