@@ -35,7 +35,7 @@
 #include <stdio.h>
 #include "spi.h"
 #include "i2c.h"
-#include "bme280.h"
+#include "i2cbb.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 
@@ -61,28 +61,19 @@ void delay(volatile unsigned int time_del)
  */
 int main(void)
 {
-#if 1
+#if 0
 	Init_SPI2();
-	BME280_Init();
+
 	delay(1000);
 
 	printf("hello worled!!\n\r");
 	while(1)
 	{
-		printf("SPI = %x\n\r", SPI_Read(0xD0));
-		BME280_Data data;
-
-		BME280_ReadAll(&data);
-
-		printf("Read values: Temp %f Pressure %f Humidity %f\n\r",
-				 data.temperature,
-				 data.pressure,
-				 data.humidity);
-
-		delay(1000);
+		printf("SPI = %x\n\r", SPI_Read());
+		delay(500);
 	}
 #endif
-#if 0
+#if 1
 	I2C_Init();
 	delay(500);
 	uint8_t read_val = 0;

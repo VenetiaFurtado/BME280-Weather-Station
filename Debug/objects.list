@@ -1,3 +1,6 @@
+"./Src/bme280.o"
+"./Src/i2c.o"
+"./Src/i2cbb.o"
 "./Src/main.o"
 "./Src/spi.o"
 "./Src/syscalls.o"

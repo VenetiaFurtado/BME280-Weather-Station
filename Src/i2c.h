@@ -1,5 +1,5 @@
-#ifndef __SPI_H__
-#define __SPI_H__
+#ifndef __I2C_H__
+#define __I2C_H__
 
 /*******************************************************************************
  * Copyright (c) 2023 STMicroelectronics.
@@ -12,20 +12,17 @@
  * any misuse of this material.
  * ****************************************************************************/
 /**
- * @file    spi.h
- * @brief	Header file for SPI2 peripheral driver.
- *          Declares initialization, full-duplex byte transfer,
- *          and loopback test functions.
+ * @file    i2c.h
+ * @brief	
  *
  * @author  Venetia Furtado
- * @date    11/03/2025
+ * @date    11/25/2025
  *
  */
-
 #include <stdint.h>
 
-void Init_SPI2(void);
-uint8_t SPI_Read(const uint8_t register_addr);
-uint8_t SPI_Write(const uint8_t register_addr, const uint8_t data);
+void I2C_Init(void);
+void I2C_ReadReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_len);
+void I2C_WriteReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_len);
 
 #endif

@@ -1,4 +1,5 @@
 ../Src/spi.c:46:6:Init_SPI2	8	static
 ../Src/spi.c:102:9:SPI_Send_Receive_Byte	24	static
-../Src/spi.c:125:9:spi_read	24	static
-../Src/spi.c:145:6:Test_SPI_Loopback	24	static
+../Src/spi.c:125:9:SPI_Read	32	static
+../Src/spi.c:139:9:SPI_Write	32	static
+../Src/spi.c:160:6:Test_SPI_Loopback	24	static

@@ -112,7 +112,7 @@ uint8_t SPI_Send_Receive_Byte(uint8_t d_out)
    *((uint8_t *)&(SPI2->DR)) = d_out;
 
    //need to write a dummy byte to generate clocks.
-   *((uint8_t *)&(SPI2->DR)) = 0xFF;
+   //*((uint8_t *)&(SPI2->DR)) = 0xFF;
 
    // Wait until receiver is not empty
    while ((SPI2->SR & SPI_SR_RXNE) == 0)
@@ -122,13 +122,28 @@ uint8_t SPI_Send_Receive_Byte(uint8_t d_out)
    return d_in;
 }
 
-uint8_t spi_read()
+uint8_t SPI_Read(const uint8_t register_addr)
 {
    uint8_t val = 0;
 
    MODIFY_FIELD(SPI2->CR1, SPI_CR1_SPE, SPI2_ENABLE);
 
-   val = SPI_Send_Receive_Byte(0xD0);
+   SPI_Send_Receive_Byte(register_addr);
+   val = SPI_Send_Receive_Byte(0x00);
+
+   MODIFY_FIELD(SPI2->CR1, SPI_CR1_SPE, 0);
+
+   return val;
+}
+
+uint8_t SPI_Write(const uint8_t register_addr, const uint8_t data)
+{
+   uint8_t val = 0;
+
+   MODIFY_FIELD(SPI2->CR1, SPI_CR1_SPE, SPI2_ENABLE);
+
+   SPI_Send_Receive_Byte(register_addr);
+   val = SPI_Send_Receive_Byte(data);
 
    MODIFY_FIELD(SPI2->CR1, SPI_CR1_SPE, 0);
 

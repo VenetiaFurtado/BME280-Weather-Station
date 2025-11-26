@@ -3,7 +3,7 @@
 # Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
-USER_OBJS :=
+USER_OBJS := ../Lib/fp_trig.o
 
 LIBS :=
 

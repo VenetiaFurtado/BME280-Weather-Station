@@ -1,5 +1,5 @@
-#ifndef __SPI_H__
-#define __SPI_H__
+#ifndef __BME280_H__
+#define __BME280_H__
 
 /*******************************************************************************
  * Copyright (c) 2023 STMicroelectronics.
@@ -12,7 +12,7 @@
  * any misuse of this material.
  * ****************************************************************************/
 /**
- * @file    spi.h
+ * @file    bme280.h
  * @brief	Header file for SPI2 peripheral driver.
  *          Declares initialization, full-duplex byte transfer,
  *          and loopback test functions.
@@ -24,8 +24,15 @@
 
 #include <stdint.h>
 
-void Init_SPI2(void);
-uint8_t SPI_Read(const uint8_t register_addr);
-uint8_t SPI_Write(const uint8_t register_addr, const uint8_t data);
+// BME280 measurement data
+typedef struct {
+    float temperature;  // °C
+    float pressure;     // hPa
+    float humidity;     // %
+} BME280_Data;
+
+uint8_t BME280_Init(void);
+void BME280_ReadAll(BME280_Data *data);
+
 
 #endif
