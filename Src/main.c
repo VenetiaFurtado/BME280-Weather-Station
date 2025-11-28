@@ -39,6 +39,7 @@
 #include "switch.h"
 #include "fsm.h"
 #include "data_acquisition.h"
+#include "systick.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 
@@ -64,23 +65,30 @@ FSMInfo info;
  */
 int main(void)
 {
-#if 1
 	Init_SPI2();
 	BME280_Init();
 	init_switch();
 	Init_DataAcquisition();
 	Init_FSM(&info);
-
-	delay(1000);
+	init_systick();
 
 	printf("hello world!!\n\r");
 
+	ticktime_t tick_counter = 0;
+
 	while (1)
 	{
-		Handle_FSM(&info);
-		delay(1000);
+		/*do not run fsm if INTERVAL_MS has not occured*/
+		if (tick_counter != get_current_tick())
+		{
+			Handle_FSM(&info);
+			tick_counter = get_current_tick();
+		}
+		/*do other work here*/
 	}
 
+
+#if 0
 	while (1)
 	{
 		printf("SPI = %x\n\r", SPI_Read(0xD0));

@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "data_acquisition.h"
-#include "bme280.h"
 #include "buffer.h"
 #include "utilities.h"
 #include "log.h"
@@ -17,9 +16,10 @@ float avg_temp;
 void Init_DataAcquisition()
 {
    init_buffer_with_default_val(&data_buffer);
-   Init_TIM7();
+   //Init_TIM7();
 }
 
+#if 0
 /**
  * @brief Initializes TIM7.
  * 
@@ -59,31 +59,27 @@ void Init_TIM7(void)
    // Enable and start the timer
    TIM7->CR1 |= TIM_CR1_CEN;
 }
+#endif
 
-void acquire_data()
+void acquire_data(BME280_Data* data)
 {
-   BME280_Data data;
+   BME280_ReadAll(data);
 
-   BME280_ReadAll(&data);
-
-   INFO_LOG("Current Temp = %f\n\r", data.temperature);
-
-   if (write_to_buffer(&data_buffer, &data) == -1)
+   if (write_to_buffer(&data_buffer, data) == -1)
    {
       INFO_LOG("Write to buffer failed!!");
    }
 
-   running_sum_temp += data.temperature;
+   running_sum_temp += data->temperature;
 
-   if(cbfifo_length(&data_buffer) == 30)
+   if(cbfifo_length(&data_buffer) == 10)
    {
-      INFO_LOG("Reading tail from buffer");
       BME280_Data old_sample;
       read_from_buffer(&data_buffer, &old_sample);
       running_sum_temp -= old_sample.temperature;
    }
 
-   INFO_LOG("running_sum_temp= %f len = %u\n\r", running_sum_temp, cbfifo_length(&data_buffer));
+   //INFO_LOG("running_sum_temp= %f len = %u\n\r", running_sum_temp, cbfifo_length(&data_buffer));
    avg_temp = running_sum_temp/cbfifo_length(&data_buffer); 
 }
 
@@ -92,6 +88,7 @@ float get_avg_temp()
    return avg_temp;
 }
 
+#if 0
 /**
  * @brief TIM7 interrupt handler-fires every 3 seconds
  */
@@ -104,3 +101,4 @@ void TIM7_IRQHandler(void)
       acquire_data();
    }
 }
+#endif

@@ -30,6 +30,7 @@
 #include "fsm.h"
 #include "log.h"
 #include "switch.h"
+#include "bme280.h"
 #include "data_acquisition.h"
 
 void Init_FSM(FSMInfo *info_ptr)
@@ -40,12 +41,19 @@ void Init_FSM(FSMInfo *info_ptr)
 void Handle_FSM(FSMInfo *info_ptr)
 {
 
-   INFO_LOG("get_avg_temp() = %f\n\r", get_avg_temp());
+   //INFO_LOG("get_avg_temp() = %f\n\r", get_avg_temp());
+   BME280_Data data;
+   acquire_data(&data);
 
    switch (info_ptr->state)
    {
    case NORMAL:
       /* code */
+      INFO_LOG("Read values: Temp %f Pressure %f Humidity %f",
+               data.temperature,
+               data.pressure,
+               data.humidity);
+
       if (was_switch_activated() == true)
       {
          info_ptr->state = USER;
@@ -61,6 +69,8 @@ void Handle_FSM(FSMInfo *info_ptr)
       break;
    case EMERGENCY:
       /* code */
+      INFO_LOG("HIGH TEMPERATURE WARNING : %f", get_avg_temp());
+
       if (was_switch_activated() == true)
       {
          info_ptr->state = USER;
@@ -72,23 +82,22 @@ void Handle_FSM(FSMInfo *info_ptr)
          INFO_LOG("State Transition: EMERGENCY -> NORMAL");
       }
       break;
+
    case USER:
       /* code */
-      if (was_switch_activated() == true)
-      {
-         if (get_avg_temp() >= EMERGENCY_THRESHOLD)
-         {
-            info_ptr->state = EMERGENCY;
-            INFO_LOG("State Transition: USER -> EMERGENCY");
+      USER_LOG("Average Temperature %f", get_avg_temp());
 
-         }
-         else
-         {
-            info_ptr->state = NORMAL;
-            INFO_LOG("State Transition: USER -> NORMAL");
-         }
-         break;
+      if (get_avg_temp() >= EMERGENCY_THRESHOLD)
+      {
+         info_ptr->state = EMERGENCY;
+         INFO_LOG("State Transition: USER -> EMERGENCY");
       }
+      else
+      {
+         info_ptr->state = NORMAL;
+         INFO_LOG("State Transition: USER -> NORMAL");
+      }
+
       break;
    }
 }

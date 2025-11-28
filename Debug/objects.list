@@ -10,4 +10,5 @@
 "./Src/switch.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
+"./Src/systick.o"
 "./Startup/startup_stm32f091rctx.o"

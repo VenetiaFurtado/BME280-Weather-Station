@@ -1,5 +1,6 @@
-#ifndef __DATA_ACQUISITION_H
-#define __DATA_ACQUISITION_H
+#ifndef __SYSTICK_H
+#define __SYSTICK_H
+
 /*******************************************************************************
  * Copyright (c) 2023 STMicroelectronics.
  * All rights reserved.
@@ -10,25 +11,24 @@
  * Venetia Furtado and the University of Colorado are not liable for
  * any misuse of this material.
  * ****************************************************************************/
+
 /**
- * @file    fsm.h
- * @brief   Header file for the FSM.
- *
- * This header defines the data structures, enumerations, and function
- * prototypes for controlling the ELED behavior. The FSM manages
- * LED blinking, pause, and transition states, including station-based
- * brightness levels and emergency handling.
+ * @file    systick.h
+ * @brief   Header file for SysTick timer configuration and timekeeping.
  * 
  * @author  Venetia Furtado
  * @date    10/06/2025
  *
  */
-#include "bme280.h"
+#include <stdint.h>
 
 
-void Init_TIM7(void);
-void Init_DataAcquisition();
-void acquire_data(BME280_Data* data);
-float get_avg_temp();
+typedef uint32_t ticktime_t;
 
- #endif
+void init_systick(void);
+void SysTick_Handler(void);
+void reset_timer();
+ticktime_t get_current_tick();
+uint32_t time_since_startup();
+
+#endif

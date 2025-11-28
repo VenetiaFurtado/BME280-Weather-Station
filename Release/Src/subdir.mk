@@ -16,7 +16,8 @@ C_SRCS += \
 ../Src/spi.c \
 ../Src/switch.c \
 ../Src/syscalls.c \
-../Src/sysmem.c 
+../Src/sysmem.c \
+../Src/systick.c 
 
 OBJS += \
 ./Src/bme280.o \
@@ -30,7 +31,8 @@ OBJS += \
 ./Src/spi.o \
 ./Src/switch.o \
 ./Src/syscalls.o \
-./Src/sysmem.o 
+./Src/sysmem.o \
+./Src/systick.o 
 
 C_DEPS += \
 ./Src/bme280.d \
@@ -44,7 +46,8 @@ C_DEPS += \
 ./Src/spi.d \
 ./Src/switch.d \
 ./Src/syscalls.d \
-./Src/sysmem.d 
+./Src/sysmem.d \
+./Src/systick.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -54,7 +57,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/bme280.cyclo ./Src/bme280.d ./Src/bme280.o ./Src/bme280.su ./Src/buffer.cyclo ./Src/buffer.d ./Src/buffer.o ./Src/buffer.su ./Src/data_acquisition.cyclo ./Src/data_acquisition.d ./Src/data_acquisition.o ./Src/data_acquisition.su ./Src/fsm.cyclo ./Src/fsm.d ./Src/fsm.o ./Src/fsm.su ./Src/i2c.cyclo ./Src/i2c.d ./Src/i2c.o ./Src/i2c.su ./Src/i2cbb.cyclo ./Src/i2cbb.d ./Src/i2cbb.o ./Src/i2cbb.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/pwm.cyclo ./Src/pwm.d ./Src/pwm.o ./Src/pwm.su ./Src/spi.cyclo ./Src/spi.d ./Src/spi.o ./Src/spi.su ./Src/switch.cyclo ./Src/switch.d ./Src/switch.o ./Src/switch.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+	-$(RM) ./Src/bme280.cyclo ./Src/bme280.d ./Src/bme280.o ./Src/bme280.su ./Src/buffer.cyclo ./Src/buffer.d ./Src/buffer.o ./Src/buffer.su ./Src/data_acquisition.cyclo ./Src/data_acquisition.d ./Src/data_acquisition.o ./Src/data_acquisition.su ./Src/fsm.cyclo ./Src/fsm.d ./Src/fsm.o ./Src/fsm.su ./Src/i2c.cyclo ./Src/i2c.d ./Src/i2c.o ./Src/i2c.su ./Src/i2cbb.cyclo ./Src/i2cbb.d ./Src/i2cbb.o ./Src/i2cbb.su ./Src/main.cyclo ./Src/main.d ./Src/main.o ./Src/main.su ./Src/pwm.cyclo ./Src/pwm.d ./Src/pwm.o ./Src/pwm.su ./Src/spi.cyclo ./Src/spi.d ./Src/spi.o ./Src/spi.su ./Src/switch.cyclo ./Src/switch.d ./Src/switch.o ./Src/switch.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su ./Src/systick.cyclo ./Src/systick.d ./Src/systick.o ./Src/systick.su
 
 .PHONY: clean-Src
 
