@@ -1,0 +1,8 @@
+../CMSIS/core_cm0.h:623:22:__NVIC_EnableIRQ	2
+../CMSIS/core_cm0.h:714:22:__NVIC_ClearPendingIRQ	2
+../CMSIS/core_cm0.h:732:22:__NVIC_SetPriority	2
+../Src/data_acquisition.c:17:6:Init_DataAcquisition	1
+../Src/data_acquisition.c:30:6:Init_TIM7	1
+../Src/data_acquisition.c:63:6:acquire_data	3
+../Src/data_acquisition.c:90:7:get_avg_temp	1
+../Src/data_acquisition.c:98:6:TIM7_IRQHandler	2

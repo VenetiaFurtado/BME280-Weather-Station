@@ -1,0 +1,4 @@
+../Src/i2c.c:26:6:I2C_Init	1
+../Src/i2c.c:67:6:I2C_WriteReg	5
+../Src/i2c.c:99:6:test_I2CWrite	1
+../Src/i2c.c:107:6:I2C_ReadReg	5

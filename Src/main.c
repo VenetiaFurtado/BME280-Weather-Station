@@ -36,6 +36,9 @@
 #include "spi.h"
 #include "i2c.h"
 #include "bme280.h"
+#include "switch.h"
+#include "fsm.h"
+#include "data_acquisition.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 
@@ -51,7 +54,7 @@ void delay(volatile unsigned int time_del)
         }
 }
 
-
+FSMInfo info;
 
 /**
  * @brief 	Initializes all peripherals required for waveform generation and analog
@@ -64,10 +67,21 @@ int main(void)
 #if 1
 	Init_SPI2();
 	BME280_Init();
+	init_switch();
+	Init_DataAcquisition();
+	Init_FSM(&info);
+
 	delay(1000);
 
-	printf("hello worled!!\n\r");
-	while(1)
+	printf("hello world!!\n\r");
+
+	while (1)
+	{
+		Handle_FSM(&info);
+		delay(1000);
+	}
+
+	while (1)
 	{
 		printf("SPI = %x\n\r", SPI_Read(0xD0));
 		BME280_Data data;

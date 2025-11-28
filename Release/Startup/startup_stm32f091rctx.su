@@ -1,0 +1,2 @@
+../Startup/startup_stm32f091rctx.c:18:6:Default_Handler	8	static
+../Startup/startup_stm32f091rctx.c:25:6:Reset_Handler	24	static,ignoring_inline_asm
