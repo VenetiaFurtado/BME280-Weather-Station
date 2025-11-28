@@ -66,10 +66,11 @@ uint8_t current_brightness_level = MAXIMUM_LED_BRIGHTNESS;
 void led_brightness(uint8_t brightness_level)
 {
 	uint32_t calculated_brightness_level = brightness_level * PWM_BRIGHTNESS_INTERVAL;
-	TIM3->CCR2 = calculated_brightness_level;
+	TIM2->CCR1 = calculated_brightness_level;
 	current_brightness_level = brightness_level;
 }
 
+#if 0
 /**
  * @brief Initializes the PWM peripheral for external LED (ELED) brightness control.
  *
@@ -109,4 +110,36 @@ void init_eled_pwm(void)
 	TIM3->BDTR |= TIM_BDTR_MOE;						 /*Enable main output*/
 
 	TIM3->CR1 |= TIM_CR1_CEN; /*Enable timer*/
+}
+#endif
+
+void PWM_Init(void)
+{
+	// Enable clocks for GPIOA and TIM2
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+
+	// Configure PA5 as alternate function (TIM2_CH1)
+	GPIOA->MODER &= ~(3U << (5 * 2));	// Clear mode bits
+	GPIOA->MODER |= (2U << (5 * 2));		// Set to alternate function mode
+	GPIOA->AFR[0] &= ~(0xF << (5 * 4)); // Clear alternate function bits
+	GPIOA->AFR[0] |= (2U << (5 * 4));	// AF2 for TIM2_CH1
+
+	// Configure TIM2
+	// Assuming system clock = 48 MHz
+	TIM2->PSC = PWM_PRESCALER - 1; //47;  // Prescaler: 48MHz / (47+1) = 1MHz
+	TIM2->ARR = PWM_MAX_DUTY_VALUE; //999; // Auto-reload: 1MHz / (999+1) = 1kHz PWM frequency
+
+	// Configure Channel 1 in PWM mode 1
+	TIM2->CCMR1 &= ~TIM_CCMR1_OC1M; // Clear output compare mode bits
+	TIM2->CCMR1 |= (6U << 4);		  // PWM mode 1 (0b110)
+	TIM2->CCMR1 |= TIM_CCMR1_OC1PE; // Enable preload register
+
+	TIM2->CCR1 = 1; // 50% duty cycle (500/1000)
+
+	// Enable channel 1 output
+	TIM2->CCER |= TIM_CCER_CC1E;
+
+	// Enable timer
+	TIM2->CR1 |= TIM_CR1_CEN;
 }

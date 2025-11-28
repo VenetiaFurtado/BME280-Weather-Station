@@ -40,6 +40,7 @@
 #include "fsm.h"
 #include "data_acquisition.h"
 #include "systick.h"
+#include "pwm.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 
@@ -65,6 +66,8 @@ FSMInfo info;
  */
 int main(void)
 {
+	//init_uled_pwm();
+	PWM_Init();
 	Init_SPI2();
 	BME280_Init();
 	init_switch();
@@ -75,7 +78,7 @@ int main(void)
 	printf("hello world!!\n\r");
 
 	ticktime_t tick_counter = 0;
-
+	uint8_t var = 0;
 	while (1)
 	{
 		/*do not run fsm if INTERVAL_MS has not occured*/
@@ -83,6 +86,8 @@ int main(void)
 		{
 			Handle_FSM(&info);
 			tick_counter = get_current_tick();
+			led_brightness(var);
+			var += 50;
 		}
 		/*do other work here*/
 	}
