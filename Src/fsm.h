@@ -26,12 +26,12 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define EMERGENCY_THRESHOLD 24
+#define EMERGENCY_THRESHOLD 23
 
 typedef enum
 {
-   NORMAL_BRIGHTNESS = 0xFF,
-   EMERGENCY_BRIGHTNESS  = 0x87,
+   NORMAL_BRIGHTNESS = 0x87,
+   EMERGENCY_BRIGHTNESS  = 0xFF,
    USER_BRIGHTNESS  = 0x0F
 } LEDBrightness;
 
@@ -45,6 +45,7 @@ typedef enum
 typedef struct
 {
    FSMState state;
+   uint8_t led_brightness;
 } FSMInfo;
 
 void Init_FSM(FSMInfo* info_ptr);

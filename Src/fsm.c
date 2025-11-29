@@ -9,7 +9,7 @@
  * any misuse of this material.
  * ****************************************************************************/
 /**
- * @file    eled_fsm.c
+ * @file    fsm.c
  * @brief   External LED (ELED) finite state machine implementation.
  *
  * This file implements the FSM controlling the ELED for
@@ -32,6 +32,7 @@
 #include "switch.h"
 #include "bme280.h"
 #include "data_acquisition.h"
+#include "pwm.h"
 
 void Init_FSM(FSMInfo *info_ptr)
 {
@@ -48,7 +49,15 @@ void Handle_FSM(FSMInfo *info_ptr)
    switch (info_ptr->state)
    {
    case NORMAL:
-      /* code */
+      if(info_ptr->led_brightness == 0)
+      {
+         info_ptr->led_brightness = NORMAL_BRIGHTNESS;
+      }
+      else
+      {
+         info_ptr->led_brightness = 0;
+      }
+      led_brightness(info_ptr->led_brightness);
       INFO_LOG("Read values: Temp %f Pressure %f Humidity %f",
                data.temperature,
                data.pressure,
@@ -68,7 +77,15 @@ void Handle_FSM(FSMInfo *info_ptr)
 
       break;
    case EMERGENCY:
-      /* code */
+      if(info_ptr->led_brightness == 0)
+      {
+         info_ptr->led_brightness = EMERGENCY_BRIGHTNESS;
+      }
+      else
+      {
+         info_ptr->led_brightness = 0;
+      }
+      led_brightness(info_ptr->led_brightness);
       INFO_LOG("HIGH TEMPERATURE WARNING : %f", get_avg_temp());
 
       if (was_switch_activated() == true)
@@ -84,7 +101,15 @@ void Handle_FSM(FSMInfo *info_ptr)
       break;
 
    case USER:
-      /* code */
+      if(info_ptr->led_brightness == 0)
+      {
+         info_ptr->led_brightness = USER_BRIGHTNESS;
+      }
+      else
+      {
+         info_ptr->led_brightness = 0;
+      }
+      led_brightness(info_ptr->led_brightness);
       USER_LOG("Average Temperature %f", get_avg_temp());
 
       if (get_avg_temp() >= EMERGENCY_THRESHOLD)
