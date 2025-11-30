@@ -1,4 +1,5 @@
 #include "spi.h"
+#include "i2c.h"
 #include "bme280.h"
 
 
@@ -45,18 +46,30 @@ typedef struct {
     int8_t   dig_H6;
 } BME280_CalibData;
 
-
+#define BME280_I2C_ADDR 0x76
 
 // Global calibration data
 BME280_CalibData calib;
 int32_t t_fine;  // Used for temperature compensation
 
-void BME280_WriteReg(const uint8_t reg, const uint8_t value) {
-    SPI_Write(reg & 0x7F, value);  // Write: clear MSB
+void BME280_WriteReg(const uint8_t reg, const uint8_t value)
+{
+#ifdef DO_SPI
+    SPI_Write(reg & 0x7F, value); // Write: clear MSB
+#else
+    I2C_WriteReg(BME280_I2C_ADDR, reg, &value, 1);
+#endif
 }
 
-uint8_t BME280_ReadReg(const uint8_t reg) {    
+uint8_t BME280_ReadReg(const uint8_t reg)
+{
+#ifdef DO_SPI
     return SPI_Read(reg);
+#else
+    uint8_t read_val;
+    I2C_ReadReg(BME280_I2C_ADDR, reg, &read_val, 1);
+    return read_val;
+#endif
 }
 
 void BME280_ReadRegs(uint8_t reg, uint8_t *buffer, uint8_t len) {    

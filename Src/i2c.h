@@ -23,6 +23,6 @@
 
 void I2C_Init(void);
 void I2C_ReadReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_len);
-void I2C_WriteReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_len);
+void I2C_WriteReg(uint8_t dev_adx, uint8_t reg_adx, const uint8_t *bufp, uint16_t data_len);
 
 #endif

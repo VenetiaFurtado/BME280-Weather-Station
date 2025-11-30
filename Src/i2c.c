@@ -51,9 +51,15 @@ void I2C_Init(void)
    // These values are for standard mode (100kHz)
    I2C1->TIMINGR = 0x10805E89;
 
-   //Set PB12 high for SDO
+   // CSB must be connected to VDDIO to select I²C interface.
+   //Set PB12 high for CSB
    MODIFY_FIELD(GPIOB->MODER, GPIO_MODER_MODER12, ESF_GPIO_MODER_OUTPUT);
    GPIOB->BSRR |= GPIO_BSRR_BS_12;
+
+   //Connecting SDO to GND results in slave address 1110110 (0x76)
+   //Set PB14 low for SDO
+   MODIFY_FIELD(GPIOB->MODER, GPIO_MODER_MODER14, ESF_GPIO_MODER_OUTPUT);
+   GPIOB->BSRR |= GPIO_BSRR_BR_14;
 
    // I2C1 Configuration
    I2C1->CR1 = 0;              // Default configuration, peripheral disabled
@@ -64,7 +70,7 @@ void I2C_Init(void)
 }
 
 //I2C_WriteReg
-void I2C_WriteReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_len)
+void I2C_WriteReg(uint8_t dev_adx, uint8_t reg_adx, const uint8_t* bufp, uint16_t data_len)
 {
    uint32_t tmp;
    // -- Send START, Device Address, Write Command --
@@ -109,7 +115,7 @@ void I2C_ReadReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_
    uint32_t tmp;
    // -- Send START, Device Address, Write Command --
    tmp = 0;
-   MODIFY_FIELD(tmp, I2C_CR2_SADD, dev_adx);
+   MODIFY_FIELD(tmp, I2C_CR2_SADD, dev_adx<<1);
    MODIFY_FIELD(tmp, I2C_CR2_RD_WRN, 0); // First write addresses
    MODIFY_FIELD(tmp, I2C_CR2_NBYTES, 1); // 1 byte: register address
    MODIFY_FIELD(tmp, I2C_CR2_START, 1);  // Start transfer
@@ -122,7 +128,7 @@ void I2C_ReadReg(uint8_t dev_adx, uint8_t reg_adx, uint8_t *bufp, uint16_t data_
       ;
    // -- Send Repeated START, Device Address, Read Command--
    tmp = I2C1->CR2;
-   MODIFY_FIELD(tmp, I2C_CR2_SADD, dev_adx);
+   MODIFY_FIELD(tmp, I2C_CR2_SADD, dev_adx << 1);
    MODIFY_FIELD(tmp, I2C_CR2_RD_WRN, 1);        // Then read data
    MODIFY_FIELD(tmp, I2C_CR2_NBYTES, data_len); // Data byte count
    MODIFY_FIELD(tmp, I2C_CR2_START, 1);         // Start transfer

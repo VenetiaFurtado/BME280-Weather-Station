@@ -24,6 +24,9 @@
 
 #include <stdint.h>
 
+//#define DO_SPI 0
+
+
 // BME280 measurement data
 typedef struct {
     float temperature;  // °C

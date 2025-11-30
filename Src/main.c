@@ -31,7 +31,6 @@
  * 6. https://community.st.com/t5/stm32-mcus-products/problem-with-dac-dma-end-of-transmission-interrupts-on/td-p/756774
  * 
  **/
-
 #include <stdio.h>
 #include "spi.h"
 #include "i2c.h"
@@ -43,7 +42,6 @@
 #include "pwm.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
-
 
 void delay(volatile unsigned int time_del)
 {
@@ -66,8 +64,13 @@ FSMInfo info;
  */
 int main(void)
 {
-	PWM_Init();
+#if 1
+#ifdef DO_SPI
 	Init_SPI2();
+#else
+	I2C_Init();
+#endif
+	PWM_Init();
 	BME280_Init();
 	PWM_Init();
 	init_switch();
@@ -78,20 +81,15 @@ int main(void)
 	printf("hello world!!\n\r");
 
 	ticktime_t tick_counter = 0;
-	//uint8_t var = 0;
 	while (1)
 	{
-		/*do not run fsm if INTERVAL_MS has not occured*/
 		if (tick_counter != get_current_tick())
 		{
 			Handle_FSM(&info);
 			tick_counter = get_current_tick();
-			//led_brightness(var);
-			//var += 50;
 		}
-		/*do other work here*/
 	}
-
+#endif
 
 #if 0
 	while (1)
@@ -112,14 +110,16 @@ int main(void)
 #if 0
 	I2C_Init();
 	delay(500);
-	uint8_t read_val = 0;
 	printf("\rhello world!!\n\r");
-	while(1)
+	while (1)
 	{
-		I2C_WriteReg(0x76, 0xD0, &read_val, 1);
-
-		//I2C_ReadReg(0x76, 0xD0, &read_val, 1);
-		//printf("I2C = %x\n\r", read_val);
+		uint8_t read_val = 0xB6;
+		I2C_WriteReg(0x76, 0xE0, &read_val, 1);
+		// Wait for reset to complete
+		for (volatile int i = 0; i < 100000; i++)
+			;
+		I2C_ReadReg(0x76, 0xD0, &read_val, 1);
+		printf("I2C = %x\n\r", read_val);
 		delay(500);
 	}
 #endif

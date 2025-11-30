@@ -1,3 +1,3 @@
 ../Src/data_acquisition.c:16:6:Init_DataAcquisition	8	static
-../Src/data_acquisition.c:64:6:acquire_data	48	static
-../Src/data_acquisition.c:86:7:get_avg_temp	8	static
+../Src/data_acquisition.c:63:6:acquire_data	48	static
+../Src/data_acquisition.c:85:7:get_avg_temp	8	static

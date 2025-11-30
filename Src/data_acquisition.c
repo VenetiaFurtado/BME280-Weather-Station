@@ -16,7 +16,6 @@ float avg_temp;
 void Init_DataAcquisition()
 {
    init_buffer_with_default_val(&data_buffer);
-   //Init_TIM7();
 }
 
 #if 0
