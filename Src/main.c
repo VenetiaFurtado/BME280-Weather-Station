@@ -76,6 +76,7 @@ int main(void)
 	Init_DataAcquisition();
 	Init_FSM();
 	init_systick();
+	Init_TIM7();
 
 	printf("hello world!!\n\r");
 

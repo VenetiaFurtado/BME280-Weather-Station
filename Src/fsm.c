@@ -42,6 +42,20 @@ void Init_FSM()
    info.state = NORMAL;
 }
 
+uint16_t blink_frequency()
+{
+   uint16_t arr_val = NORMAL_PERIOD;
+   if(info.state == NORMAL)
+   {
+      arr_val = NORMAL_PERIOD;
+   }
+   else
+   {
+      arr_val = EMERGENCY_PERIOD;
+   }
+   return arr_val;
+}
+
 void blink_LED()
 {
    if (info.state == USER)
@@ -79,7 +93,7 @@ void FSM()
    switch (info.state)
    {
    case NORMAL:
-      blink_LED();
+      //blink_LED();
       INFO_LOG("Read values: Temp %f Pressure %f Humidity %f",
                data.temperature,
                data.pressure,
@@ -99,7 +113,7 @@ void FSM()
 
       break;
    case EMERGENCY:
-      blink_LED();
+      //blink_LED();
       INFO_LOG("HIGH TEMPERATURE WARNING : %f", get_avg_temp());
 
       if (was_switch_activated() == true)
@@ -115,7 +129,7 @@ void FSM()
       break;
 
    case USER:
-      blink_LED();
+      //blink_LED();
       USER_LOG("Average Temperature %f", get_avg_temp());
 
       if (get_avg_temp() >= EMERGENCY_THRESHOLD)

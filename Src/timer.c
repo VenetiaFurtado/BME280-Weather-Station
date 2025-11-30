@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "utilities.h"
+#include "fsm.h"
 
-#if 0
+
 #define TIM7_PSC_VAL 47999
-#define TIM7_ARR_VAL 2999
+#define TIM7_ARR_VAL 999
 
 /**
  * @brief Initializes TIM7.
@@ -55,7 +56,8 @@ void TIM7_IRQHandler(void)
    // Check if update interrupt flag is set
    if (TIM7->SR & TIM_SR_UIF)
    {
+      TIM7->ARR = blink_frequency();
+      blink_LED();
       TIM7->SR &= ~TIM_SR_UIF; // Clear interrupt flag
    }
 }
-   #endif

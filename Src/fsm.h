@@ -26,7 +26,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define EMERGENCY_THRESHOLD 23
+#define EMERGENCY_THRESHOLD 22
 
 typedef enum
 {
@@ -44,8 +44,8 @@ typedef enum
 
 typedef enum
 {
-   NORMAL_PERIOD = 1000,
-   EMERGENCY_PERIOD = 500
+   NORMAL_PERIOD = 999, //1 sec
+   EMERGENCY_PERIOD = 249 //0.25 sec
 }LEDPeriod;
 
 typedef struct
@@ -56,5 +56,7 @@ typedef struct
 
 void Init_FSM();
 void FSM();
+uint16_t blink_frequency();
+void blink_LED();
 
 #endif
