@@ -42,13 +42,19 @@ typedef enum
    USER
 } FSMState;
 
+typedef enum
+{
+   NORMAL_PERIOD = 1000,
+   EMERGENCY_PERIOD = 500
+}LEDPeriod;
+
 typedef struct
 {
    FSMState state;
    uint8_t led_brightness;
 } FSMInfo;
 
-void Init_FSM(FSMInfo* info_ptr);
-void Handle_FSM(FSMInfo* info_ptr);
+void Init_FSM();
+void FSM();
 
 #endif

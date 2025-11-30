@@ -34,30 +34,52 @@
 #include "data_acquisition.h"
 #include "pwm.h"
 
-void Init_FSM(FSMInfo *info_ptr)
+FSMInfo info;
+
+
+void Init_FSM()
 {
-   info_ptr->state = NORMAL;
+   info.state = NORMAL;
 }
 
-void Handle_FSM(FSMInfo *info_ptr)
+void blink_LED()
+{
+   if (info.state == USER)
+   {
+      info.led_brightness = USER_BRIGHTNESS;
+   }
+   else
+   {
+      if (info.led_brightness == 0)
+      {
+         if (info.state == NORMAL)
+         {
+            info.led_brightness = NORMAL_BRIGHTNESS;
+         }
+         else
+         {
+            info.led_brightness = EMERGENCY_BRIGHTNESS;
+         }
+      }
+      else
+      {
+         info.led_brightness = 0;
+      }
+   }
+   led_brightness(info.led_brightness);
+}
+
+void FSM()
 {
 
    //INFO_LOG("get_avg_temp() = %f\n\r", get_avg_temp());
    BME280_Data data;
    acquire_data(&data);
 
-   switch (info_ptr->state)
+   switch (info.state)
    {
    case NORMAL:
-      if(info_ptr->led_brightness == 0)
-      {
-         info_ptr->led_brightness = NORMAL_BRIGHTNESS;
-      }
-      else
-      {
-         info_ptr->led_brightness = 0;
-      }
-      led_brightness(info_ptr->led_brightness);
+      blink_LED();
       INFO_LOG("Read values: Temp %f Pressure %f Humidity %f",
                data.temperature,
                data.pressure,
@@ -65,64 +87,47 @@ void Handle_FSM(FSMInfo *info_ptr)
 
       if (was_switch_activated() == true)
       {
-         info_ptr->state = USER;
+         info.state = USER;
          INFO_LOG("State Transition: NORMAL -> USER");
       }
       else if (get_avg_temp() >= EMERGENCY_THRESHOLD)
       {
-         info_ptr->state = EMERGENCY;
+         info.state = EMERGENCY;
          INFO_LOG("State Transition: NORMAL -> EMERGENCY");
       }
 
 
       break;
    case EMERGENCY:
-      if(info_ptr->led_brightness == 0)
-      {
-         info_ptr->led_brightness = EMERGENCY_BRIGHTNESS;
-      }
-      else
-      {
-         info_ptr->led_brightness = 0;
-      }
-      led_brightness(info_ptr->led_brightness);
+      blink_LED();
       INFO_LOG("HIGH TEMPERATURE WARNING : %f", get_avg_temp());
 
       if (was_switch_activated() == true)
       {
-         info_ptr->state = USER;
+         info.state = USER;
          INFO_LOG("State Transition: EMERGENCY -> USER");
       }
       else if (get_avg_temp() < EMERGENCY_THRESHOLD)
       {
-         info_ptr->state = NORMAL;
+         info.state = NORMAL;
          INFO_LOG("State Transition: EMERGENCY -> NORMAL");
       }
       break;
 
    case USER:
-      if(info_ptr->led_brightness == 0)
-      {
-         info_ptr->led_brightness = USER_BRIGHTNESS;
-      }
-      else
-      {
-         info_ptr->led_brightness = 0;
-      }
-      led_brightness(info_ptr->led_brightness);
+      blink_LED();
       USER_LOG("Average Temperature %f", get_avg_temp());
 
       if (get_avg_temp() >= EMERGENCY_THRESHOLD)
       {
-         info_ptr->state = EMERGENCY;
+         info.state = EMERGENCY;
          INFO_LOG("State Transition: USER -> EMERGENCY");
       }
       else
       {
-         info_ptr->state = NORMAL;
+         info.state = NORMAL;
          INFO_LOG("State Transition: USER -> NORMAL");
       }
-
       break;
    }
 }

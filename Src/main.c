@@ -54,7 +54,6 @@ void delay(volatile unsigned int time_del)
         }
 }
 
-FSMInfo info;
 
 /**
  * @brief 	Initializes all peripherals required for waveform generation and analog
@@ -75,7 +74,7 @@ int main(void)
 	PWM_Init();
 	init_switch();
 	Init_DataAcquisition();
-	Init_FSM(&info);
+	Init_FSM();
 	init_systick();
 
 	printf("hello world!!\n\r");
@@ -85,7 +84,7 @@ int main(void)
 	{
 		if (tick_counter != get_current_tick())
 		{
-			Handle_FSM(&info);
+			FSM();
 			tick_counter = get_current_tick();
 		}
 	}

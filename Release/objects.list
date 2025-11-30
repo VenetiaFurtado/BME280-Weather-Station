@@ -3,7 +3,6 @@
 "./Src/data_acquisition.o"
 "./Src/fsm.o"
 "./Src/i2c.o"
-"./Src/i2cbb.o"
 "./Src/main.o"
 "./Src/pwm.o"
 "./Src/spi.o"
@@ -11,4 +10,5 @@
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Src/systick.o"
+"./Src/timer.o"
 "./Startup/startup_stm32f091rctx.o"

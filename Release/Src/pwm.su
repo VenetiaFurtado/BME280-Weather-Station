@@ -1,2 +1,2 @@
-../Src/pwm.c:66:6:led_brightness	24	static
-../Src/pwm.c:89:6:init_eled_pwm	8	static
+../Src/pwm.c:45:6:PWM_Init	8	static
+../Src/pwm.c:85:6:led_brightness	24	static
