@@ -29,7 +29,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "utilities.h"
-//#include "gpio.h"
 
 #define MASK(x) (1UL << (x))
 #define SW1_POS (13) /*PC13 (User Button B1)*/

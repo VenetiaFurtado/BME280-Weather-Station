@@ -1,5 +1,5 @@
 ../CMSIS/core_cm0.h:623:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
 ../CMSIS/core_cm0.h:714:22:__NVIC_ClearPendingIRQ	16	static
 ../CMSIS/core_cm0.h:732:22:__NVIC_SetPriority	24	static
-../Src/timer.c:16:6:Init_TIM7	8	static
-../Src/timer.c:52:6:TIM7_IRQHandler	8	static
+../Src/timer.c:18:6:Init_TIM7	8	static
+../Src/timer.c:54:6:TIM7_IRQHandler	8	static

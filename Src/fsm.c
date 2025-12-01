@@ -93,8 +93,8 @@ void FSM()
    switch (info.state)
    {
    case NORMAL:
-      //blink_LED();
-      INFO_LOG("Read values: Temp %f Pressure %f Humidity %f",
+      //INFO_LOG("Entering NORMAL state");
+      INFO_LOG("Read values: Temp %0.2f°C Pressure %0.2fHPa Humidity %0.2f%%",
                data.temperature,
                data.pressure,
                data.humidity);
@@ -102,45 +102,45 @@ void FSM()
       if (was_switch_activated() == true)
       {
          info.state = USER;
-         INFO_LOG("State Transition: NORMAL -> USER");
+         STATE_TRANSITION_LOG("State Transition: NORMAL -> USER");
       }
       else if (get_avg_temp() >= EMERGENCY_THRESHOLD)
       {
          info.state = EMERGENCY;
-         INFO_LOG("State Transition: NORMAL -> EMERGENCY");
+         STATE_TRANSITION_LOG("State Transition: NORMAL -> EMERGENCY");
       }
 
 
       break;
    case EMERGENCY:
       //blink_LED();
-      INFO_LOG("HIGH TEMPERATURE WARNING : %f", get_avg_temp());
+      WARNING_LOG("HIGH TEMPERATURE WARNING : %0.2f°C", get_avg_temp());
 
       if (was_switch_activated() == true)
       {
          info.state = USER;
-         INFO_LOG("State Transition: EMERGENCY -> USER");
+         STATE_TRANSITION_LOG("State Transition: EMERGENCY -> USER");
       }
       else if (get_avg_temp() < EMERGENCY_THRESHOLD)
       {
          info.state = NORMAL;
-         INFO_LOG("State Transition: EMERGENCY -> NORMAL");
+         STATE_TRANSITION_LOG("State Transition: EMERGENCY -> NORMAL");
       }
       break;
 
    case USER:
       //blink_LED();
-      USER_LOG("Average Temperature %f", get_avg_temp());
+      USER_LOG("Average Temperature = %0.2f°C", get_avg_temp());
 
       if (get_avg_temp() >= EMERGENCY_THRESHOLD)
       {
          info.state = EMERGENCY;
-         INFO_LOG("State Transition: USER -> EMERGENCY");
+         STATE_TRANSITION_LOG("State Transition: USER -> EMERGENCY");
       }
       else
       {
          info.state = NORMAL;
-         INFO_LOG("State Transition: USER -> NORMAL");
+         STATE_TRANSITION_LOG("State Transition: USER -> NORMAL");
       }
       break;
    }

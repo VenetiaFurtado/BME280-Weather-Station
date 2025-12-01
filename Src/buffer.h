@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "bme280.h"
 
-#define BUFFER_SIZE 60              // Size for circular buffer
+#define BUFFER_SIZE 100              // Size for circular buffer
 
 /**
  * @brief Contains the components of the circular buffer

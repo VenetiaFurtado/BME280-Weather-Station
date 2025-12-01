@@ -26,7 +26,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define EMERGENCY_THRESHOLD 22
+#define EMERGENCY_THRESHOLD 24
 
 typedef enum
 {

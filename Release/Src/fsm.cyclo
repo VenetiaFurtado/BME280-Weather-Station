@@ -1,3 +1,4 @@
 ../Src/fsm.c:40:6:Init_FSM	1
-../Src/fsm.c:45:6:blink_LED	4
-../Src/fsm.c:72:6:FSM	10
+../Src/fsm.c:45:10:blink_frequency	2
+../Src/fsm.c:59:6:blink_LED	4
+../Src/fsm.c:86:6:FSM	10

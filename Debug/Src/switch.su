@@ -1,7 +1,7 @@
 ../CMSIS/core_cm0.h:623:22:__NVIC_EnableIRQ	16	static,ignoring_inline_asm
 ../CMSIS/core_cm0.h:714:22:__NVIC_ClearPendingIRQ	16	static
 ../CMSIS/core_cm0.h:732:22:__NVIC_SetPriority	24	static
-../Src/switch.c:62:6:init_switch	8	static,ignoring_inline_asm
-../Src/switch.c:94:6:EXTI4_15_IRQHandler	8	static
-../Src/switch.c:110:6:is_switch_pressed	8	static
-../Src/switch.c:125:6:was_switch_activated	24	static,ignoring_inline_asm
+../Src/switch.c:61:6:init_switch	8	static,ignoring_inline_asm
+../Src/switch.c:93:6:EXTI4_15_IRQHandler	8	static
+../Src/switch.c:109:6:is_switch_pressed	8	static
+../Src/switch.c:124:6:was_switch_activated	24	static,ignoring_inline_asm

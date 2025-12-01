@@ -40,6 +40,7 @@
 #include "data_acquisition.h"
 #include "systick.h"
 #include "pwm.h"
+#include "log.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 
@@ -78,7 +79,7 @@ int main(void)
 	init_systick();
 	Init_TIM7();
 
-	printf("hello world!!\n\r");
+	STATE_TRANSITION_LOG("Entering NORMAL state");
 
 	ticktime_t tick_counter = 0;
 	while (1)
