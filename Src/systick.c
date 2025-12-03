@@ -51,7 +51,7 @@ ticktime_t time_var = 0;
  */
 void init_systick(void)
 {
-	SysTick->LOAD = (F_SYS_CLK / (DIVISION_FACTOR * INTERVAL)) - 1; /*Set reload to get 50ms interrupts*/
+	SysTick->LOAD = (F_SYS_CLK / (DIVISION_FACTOR * INTERVAL)) - 1; /*Set reload to get 100ms interrupts*/
 	NVIC_SetPriority(SysTick_IRQn, INTERRUPT_PRIORITY); /*Set interrupt priority*/
 	SysTick->VAL = 0; /*Force load of reload value*/
 	SysTick->CTRL = SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk; /*Enable interrupt, enable SysTick timer*/

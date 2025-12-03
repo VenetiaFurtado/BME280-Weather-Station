@@ -24,7 +24,6 @@
 #define MAXIMUM_LED_BRIGHTNESS 0xFF
 
 void led_brightness(uint8_t brightness_level);
-//void init_eled_pwm(void);
 void PWM_Init(void);
 
 #endif

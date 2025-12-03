@@ -9528,7 +9528,7 @@ void init_systick(void)
 {
  80044c0:	b580      	push	{r7, lr}
  80044c2:	af00      	add	r7, sp, #0
-	SysTick->LOAD = (F_SYS_CLK / (DIVISION_FACTOR * INTERVAL)) - 1; /*Set reload to get 50ms interrupts*/
+	SysTick->LOAD = (F_SYS_CLK / (DIVISION_FACTOR * INTERVAL)) - 1; /*Set reload to get 100ms interrupts*/
  80044c4:	4b09      	ldr	r3, [pc, #36]	@ (80044ec <init_systick+0x2c>)
  80044c6:	4a0a      	ldr	r2, [pc, #40]	@ (80044f0 <init_systick+0x30>)
  80044c8:	605a      	str	r2, [r3, #4]
