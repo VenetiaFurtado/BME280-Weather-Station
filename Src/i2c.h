@@ -13,10 +13,12 @@
  * ****************************************************************************/
 /**
  * @file    i2c.h
- * @brief	
+ * @brief	This header declares functions for initializing the I2C1 peripheral
+ * and performing blocking read and write operations to I2C slave devices.
+ * It is used for communication with the BME280.
  *
  * @author  Venetia Furtado
- * @date    11/25/2025
+ * @date    12/02/2025
  *
  */
 #include <stdint.h>

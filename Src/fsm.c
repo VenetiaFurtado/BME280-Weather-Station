@@ -10,20 +10,13 @@
  * ****************************************************************************/
 /**
  * @file    fsm.c
- * @brief   External LED (ELED) finite state machine implementation.
- *
- * This file implements the FSM controlling the ELED for
- * bus stop indicators. It includes functions to:
- *  - Initialize the FSM (init_eled_fsm())
- *  - Update the FSM periodically (eled_fsm())
- *  - Manage LED states: BLINK, PAUSE, and TRANSITION
- *  - Control LED brightness and station transitions
- *
- * The FSM responds to emergency conditions and tracks timing for blink
- * sequences, pause intervals, and transitions between stations.
+ * @brief   This file contains the implementation of the finite state machine (FSM)
+ * used to manage system states based on BME280 sensor readings and user input.
+ * It includes functions to initialize the FSM, run it continuously, update
+ * states, control LED behavior, and handle state-dependent events and logging.
  *
  * @author  Venetia Furtado
- * @date    10/06/2025
+ * @date    11/02/2025
  *
  */
 
@@ -33,19 +26,34 @@
 #include "bme280.h"
 #include "data_acquisition.h"
 #include "pwm.h"
+#include "systick.h"
 
 FSMInfo info;
 
-
+/**
+ * @brief Initializes the FSM.
+ * This function sets the FSM to its default starting state `NORMAL`.
+ */
 void Init_FSM()
 {
    info.state = NORMAL;
 }
 
+/**
+ * @brief Returns the LED blink frequency based on the current FSM state.
+ *
+ * This function determines the appropriate blink period for the ULED
+ * depending on whether the system is in NORMALor EMERGENCY or USER state.
+ *
+ * @return uint16_t Blink period value (ARR register value) corresponding
+ *                  to the current state.
+ *
+ * @note Uses the global `info.state` to determine the current FSM state.
+ */
 uint16_t blink_frequency()
 {
    uint16_t arr_val = NORMAL_PERIOD;
-   if(info.state == NORMAL)
+   if (info.state == NORMAL)
    {
       arr_val = NORMAL_PERIOD;
    }
@@ -56,6 +64,17 @@ uint16_t blink_frequency()
    return arr_val;
 }
 
+/**
+ * @brief Updates the LED brightness based on the current FSM state.
+ *
+ * This function controls the LED behavior according to the system state:
+ *  - In the USER state, the LED is set to a fixed USER_BRIGHTNESS.
+ *  - In NORMAL or EMERGENCY states, the LED toggles between 0 and the
+ *    corresponding state-specific brightness (NORMAL_BRIGHTNESS or
+ *    EMERGENCY_BRIGHTNESS) to create a blinking effect.
+ *
+ * The computed brightness is applied using the `led_brightness()` function.
+ */
 void blink_LED()
 {
    if (info.state == USER)
@@ -83,18 +102,30 @@ void blink_LED()
    led_brightness(info.led_brightness);
 }
 
+/**
+ * @brief Executes one iteration of the FSM
+ *
+ * This function performs the following actions based on the current system state:
+ *  - Reads the latest environmental data from the BME280 sensor.
+ *  - Updates the FSM state based on sensor readings and user switch input.
+ *  - Logs relevant information depending on the state:
+ *      - NORMAL: Logs current temperature, pressure, and humidity.
+ *      - EMERGENCY: Logs a high-temperature warning.
+ *      - USER: Logs the moving average temperature.
+ *  - Handles state transitions with appropriate logging:
+ *      - NORMAL -> USER, NORMAL -> EMERGENCY
+ *      - EMERGENCY -> USER, EMERGENCY -> NORMAL
+ *      - USER -> NORMAL, USER -> EMERGENCY
+ */
 void FSM()
 {
-
-   //INFO_LOG("get_avg_temp() = %f\n\r", get_avg_temp());
    BME280_Data data;
    acquire_data(&data);
 
    switch (info.state)
    {
    case NORMAL:
-      //INFO_LOG("Entering NORMAL state");
-      INFO_LOG("Read values: Temp %0.2f°C Pressure %0.2fHPa Humidity %0.2f%%",
+      INFO_LOG("Read values: Temp %0.2f°C Pressure %0.2fhPa Humidity %0.2f%%",
                data.temperature,
                data.pressure,
                data.humidity);
@@ -104,24 +135,20 @@ void FSM()
          info.state = USER;
          STATE_TRANSITION_LOG("State Transition: NORMAL -> USER");
       }
-      else if (get_avg_temp() >= EMERGENCY_THRESHOLD)
+      else if (data.temperature >= EMERGENCY_THRESHOLD)
       {
          info.state = EMERGENCY;
          STATE_TRANSITION_LOG("State Transition: NORMAL -> EMERGENCY");
       }
-
-
       break;
    case EMERGENCY:
-      //blink_LED();
-      WARNING_LOG("HIGH TEMPERATURE WARNING : %0.2f°C", get_avg_temp());
-
+      WARNING_LOG("HIGH TEMPERATURE WARNING : %0.2f°C", data.temperature);
       if (was_switch_activated() == true)
       {
          info.state = USER;
          STATE_TRANSITION_LOG("State Transition: EMERGENCY -> USER");
       }
-      else if (get_avg_temp() < EMERGENCY_THRESHOLD)
+      else if (data.temperature < EMERGENCY_THRESHOLD)
       {
          info.state = NORMAL;
          STATE_TRANSITION_LOG("State Transition: EMERGENCY -> NORMAL");
@@ -129,10 +156,9 @@ void FSM()
       break;
 
    case USER:
-      //blink_LED();
       USER_LOG("Average Temperature = %0.2f°C", get_avg_temp());
 
-      if (get_avg_temp() >= EMERGENCY_THRESHOLD)
+      if (data.temperature >= EMERGENCY_THRESHOLD)
       {
          info.state = EMERGENCY;
          STATE_TRANSITION_LOG("State Transition: USER -> EMERGENCY");
@@ -143,5 +169,28 @@ void FSM()
          STATE_TRANSITION_LOG("State Transition: USER -> NORMAL");
       }
       break;
+   }
+}
+
+/**
+ * @brief This function implements the main FSM execution loop. It repeatedly
+ * checks the system tick counter (from SysTick) and calls `FSM()`
+ * whenever a new tick is detected. This ensures the FSM runs at a
+ * fixed interval determined by the SysTick timer.
+ *
+ * @note This function never returns and is intended to be the main
+ *       control loop of the application.
+ * @note Relies on get_current_tick() to track SysTick increments.
+ */
+void run_FSM()
+{
+   ticktime_t tick_counter = 0;
+   while (1)
+   {
+      if (tick_counter != get_current_tick())
+      {
+         FSM();
+         tick_counter = get_current_tick();
+      }
    }
 }

@@ -21,7 +21,7 @@
  * @date    10/06/2025
  *
  */
-void init_switch();
+void Init_switch();
 bool is_switch_pressed();
 bool was_switch_activated();
 

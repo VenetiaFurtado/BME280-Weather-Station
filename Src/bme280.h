@@ -13,18 +13,17 @@
  * ****************************************************************************/
 /**
  * @file    bme280.h
- * @brief	Header file for SPI2 peripheral driver.
- *          Declares initialization, full-duplex byte transfer,
- *          and loopback test functions.
- *
- * @author  Venetia Furtado
- * @date    11/03/2025
+ * @brief	Forward declaration of the functions in bme280.c
+ * Source:
+ * 1. https://github.com/sparkfun/SparkFun_BME280_Arduino_Library/tree/870c17da1f4c76561e14b8ffcc7cdffd63136e10/src
+ * 2. https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf
+ * @date    12/02/2025
  *
  */
 
 #include <stdint.h>
 
-//#define DO_SPI 0
+//#define RUN_WITH_SPI 0
 
 
 // BME280 measurement data

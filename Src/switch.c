@@ -58,7 +58,7 @@ bool switch_activated = false;
  * @note This function has been referenced from:
  * https://github.com/alexander-g-dean/ESF/tree/master/ST/Code/ch7
  */
-void init_switch()
+void Init_switch()
 {
    RCC->AHBENR |= RCC_AHBENR_GPIOCEN;                                    /*Enable peripheral clock of GPIOC (for Switch B1)*/
    MODIFY_FIELD(GPIOC->MODER, GPIO_MODER_MODER13, ESF_GPIO_MODER_INPUT); /*​Configure PC13 in input mode*/

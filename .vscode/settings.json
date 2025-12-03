@@ -9,6 +9,10 @@
       "compare": "c",
       "stdio.h": "c",
       "autocorrelate.h": "c",
-      "waveform_analysis.h": "c"
+      "waveform_analysis.h": "c",
+      "data_acquisition.h": "c",
+      "bme280.h": "c",
+      "functional": "c",
+      "random": "c"
    }
 }

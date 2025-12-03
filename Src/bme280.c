@@ -1,3 +1,13 @@
+/**
+ * @file    bme280.c
+ * @brief	Driver implementation for the Bosch BME280 environmental sensor.
+ *
+ * This code has been sourced from:
+ * 1. https://github.com/sparkfun/SparkFun_BME280_Arduino_Library/tree/870c17da1f4c76561e14b8ffcc7cdffd63136e10/src
+ * 2. https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf
+ * @date    12/02/2025
+ *
+ */
 #include "spi.h"
 #include "i2c.h"
 #include "bme280.h"
@@ -52,18 +62,36 @@ typedef struct {
 BME280_CalibData calib;
 int32_t t_fine;  // Used for temperature compensation
 
+/**
+ * @brief Writes a single byte to a BME280 register.
+ *
+ * Sends a command to write a value to the given register address
+ * using either SPI or I2C depending on the build configuration.
+ *
+ * @param reg   Register address to write to.
+ * @param value Byte value to write into the register.
+ */
 void BME280_WriteReg(const uint8_t reg, const uint8_t value)
 {
-#ifdef DO_SPI
+#ifdef RUN_WITH_SPI
     SPI_Write(reg & 0x7F, value); // Write: clear MSB
 #else
     I2C_WriteReg(BME280_I2C_ADDR, reg, &value, 1);
 #endif
 }
 
+/**
+ * @brief Reads a single byte from a BME280 register.
+ *
+ * Retrieves a value from the specified register using either
+ * SPI or I2C depending on the build configuration.
+ *
+ * @param reg Register address to read from.
+ * @return uint8_t Value read from the register.
+ */
 uint8_t BME280_ReadReg(const uint8_t reg)
 {
-#ifdef DO_SPI
+#ifdef RUN_WITH_SPI
     return SPI_Read(reg);
 #else
     uint8_t read_val;
@@ -72,6 +100,16 @@ uint8_t BME280_ReadReg(const uint8_t reg)
 #endif
 }
 
+/**
+ * @brief Reads multiple consecutive BME280 registers.
+ *
+ * Repeatedly reads from the starting register address and stores
+ * each value into the provided buffer.
+ *
+ * @param reg     Starting register address.
+ * @param buffer  Pointer to buffer to store read values.
+ * @param len     Number of bytes to read.
+ */
 void BME280_ReadRegs(uint8_t reg, uint8_t *buffer, uint8_t len) {    
     for (uint8_t i = 0; i < len; i++) {
         buffer[i] = BME280_ReadReg(reg++);
@@ -79,6 +117,16 @@ void BME280_ReadRegs(uint8_t reg, uint8_t *buffer, uint8_t len) {
 }
 
 // ========== BME280 Initialization ==========
+/**
+ * @brief Initializes the BME280 sensor.
+ *
+ * Performs a soft reset, verifies the chip ID, loads factory
+ * calibration coefficients, and configures oversampling settings for
+ * temperature, pressure, and humidity. Also sets the operating mode.
+ *
+ * @return uint8_t Returns 1 on successful initialization, 0 if the
+ *                 chip ID does not match the expected value.
+ */
 uint8_t BME280_Init(void) {
     uint8_t chip_id;
     uint8_t calib_data[32];
@@ -137,6 +185,12 @@ uint8_t BME280_Init(void) {
 }
 
 // ========== BME280 Compensation Functions ==========
+/**
+ * @brief Compensates raw temperature ADC value.
+ *
+ * @param adc_T Raw temperature ADC value (20-bit).
+ * @return int32_t Temperature in hundredths of a degree Celsius (°C × 100).
+ */
 int32_t BME280_CompensateTemp(int32_t adc_T) {
     int32_t var1, var2, T;
     
@@ -152,7 +206,12 @@ int32_t BME280_CompensateTemp(int32_t adc_T) {
     return T;  // Temperature in 0.01°C
 }
 
-
+/**
+ * @brief Compensates raw pressure ADC value.
+ *
+ * @param adc_P Raw pressure ADC value (20-bit).
+ * @return uint32_t Compensated pressure in Pa/256.
+ */
 uint32_t BME280_CompensatePressure(int32_t adc_P) {
     int64_t var1, var2, p;
     
@@ -177,6 +236,12 @@ uint32_t BME280_CompensatePressure(int32_t adc_P) {
     return (uint32_t)p;  // Pressure in Pa/256
 }
 
+/**
+ * @brief Compensates raw humidity ADC value.
+ *
+ * @param adc_H Raw humidity ADC value (16-bit).
+ * @return uint32_t Relative humidity in %RH × 1024.
+ */
 uint32_t BME280_CompensateHumidity(int32_t adc_H) {
     int32_t v_x1_u32r;
     
@@ -197,6 +262,19 @@ uint32_t BME280_CompensateHumidity(int32_t adc_H) {
 }
 
 // ========== BME280 Read All Measurements ==========
+/**
+ * @brief Reads all environmental measurements from the BME280.
+ *
+ * Reads temperature, pressure, and humidity raw ADC values from the
+ * sensor, applies compensation formulas, and stores the results in
+ * floating-point format within the provided data structure.
+ *
+ * @param data Pointer to a BME280_Data structure where the
+ *             compensated values will be stored. Fields returned:
+ *             - temperature (°C)
+ *             - pressure (hPa)
+ *             - humidity (%RH)
+ */
 void BME280_ReadAll(BME280_Data *data) {
     uint8_t raw_data[8];
     int32_t adc_T, adc_P, adc_H;
@@ -216,5 +294,3 @@ void BME280_ReadAll(BME280_Data *data) {
     data->pressure = BME280_CompensatePressure(adc_P) / 25600.0f;  // hPa
     data->humidity = BME280_CompensateHumidity(adc_H) / 1024.0f;  // %
 }
-
-

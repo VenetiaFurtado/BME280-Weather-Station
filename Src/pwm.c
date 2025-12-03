@@ -11,21 +11,10 @@
 
 /**
  * @file    pwm.c
- * @brief PWM control module for LED brightness adjustment on STM32F091RC.
- *
- * This file contains functions and macros to configure and control
- * the PWM signal used for driving an external LED (ELED).
- * It sets up Timer 3, Channel 2 (PA7) to generate a PWM output signal
- * with adjustable duty cycle corresponding to LED brightness levels.
- *
- * The PWM frequency and brightness steps are derived from the system clock
- * and prescaler configuration. The module provides functions to:
- *  - Initialize the PWM peripheral.
- *  - Adjust the LED brightness via duty cycle updates.
- *  - Retrieve the current brightness level.
+ * @brief 
  *
  * @author  Venetia Furtado
- * @date    10/06/2025
+ * @date    12/02/2025
  *
  */
 #include <stdio.h>
@@ -39,9 +28,27 @@
 #define PWM_MAX_DUTY_VALUE ( (F_TIM_CLOCK / (PWM_FREQUENCY * PWM_PRESCALER)) - 1)
 #define PWM_BRIGHTNESS_INTERVAL (PWM_MAX_DUTY_VALUE / 255)
 #define PWM_PRESCALER (2)
+#define PWM_MODE_1 (6U << 4)
 
 uint8_t current_brightness_level = MAXIMUM_LED_BRIGHTNESS;
 
+/**
+ * @brief Initializes PWM output on PA5 using TIM2 Channel 1.
+ *
+ * This function configures GPIOA pin 5 as an alternate function for TIM2_CH1
+ * and sets up TIM2 to generate a PWM signal with a 1 kHz frequency. The PWM
+ * channel is configured in PWM mode 1 with preload enabled, and the timer
+ * is started immediately.
+ *
+ * Configuration details:
+ *  - System clock assumed: 48 MHz
+ *  - Timer prescaler: PWM_PRESCALER
+ *  - Auto-reload value: PWM_MAX_DUTY_VALUE
+ *  - PWM frequency: 1 kHz
+ *  - Initial duty cycle: 50%
+ * 
+ * Source: https://github.com/alexander-g-dean/ESF/blob/master/ST/Code/ch7/PWM/main.c
+ */
 void PWM_Init(void)
 {
 	// Enable clocks for GPIOA and TIM2
@@ -61,7 +68,7 @@ void PWM_Init(void)
 
 	// Configure Channel 1 in PWM mode 1
 	TIM2->CCMR1 &= ~TIM_CCMR1_OC1M; // Clear output compare mode bits
-	TIM2->CCMR1 |= (6U << 4);		  // PWM mode 1 (0b110)
+	TIM2->CCMR1 |= PWM_MODE_1;		  // PWM mode 1 (0b110)
 	TIM2->CCMR1 |= TIM_CCMR1_OC1PE; // Enable preload register
 	TIM2->CCR1 = 1; // 50% duty cycle (500/1000)
 
@@ -73,14 +80,9 @@ void PWM_Init(void)
 }
 
 /**
- * @brief Sets the brightness of the ELED using PWM.
+ * @brief Sets the brightness of the ULED using PWM.
  *
- * This function calculates the appropriate PWM duty cycle based on the
- * provided 8-bit brightness level (0–255) and updates TIM3 Channel 2
- * to adjust the LED brightness. It also updates the global variable
- * current_brightness_level.
- *
- * @param brightness_level Desired brightness level (0 = off, 255 = maximum brightness).
+ * @param brightness_level Desired brightness level (0 = off, FF = maximum brightness).
  */
 void led_brightness(uint8_t brightness_level)
 {

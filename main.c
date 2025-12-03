@@ -35,7 +35,6 @@
 #include <stdio.h>
 #include "spi.h"
 #include "i2c.h"
-#include "i2cbb.h"
 
 #define WAIT_TIME_PER_ITERATION          (3000)
 

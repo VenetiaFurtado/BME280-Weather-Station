@@ -33,7 +33,6 @@
 #define INFO_LOG(...)
 #endif
 
-//#define USER_LOG(...) printf("\n\r");printf(__VA_ARGS__); printf("\n\r")
 #define STATE_TRANSITION_LOG(...) printf("\n\r\033[1;34m" __VA_ARGS__);printf("\033[0m\n\r") //blue
 #define USER_LOG(...) printf("\n\r\033[38;5;214m" __VA_ARGS__);printf("\033[0m\n\r")//orange
 #define WARNING_LOG(...) printf("\n\r\033[1;31m" __VA_ARGS__);printf("\033[0m")   //red

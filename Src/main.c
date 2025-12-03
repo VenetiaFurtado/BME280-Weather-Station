@@ -18,17 +18,16 @@
 
 /**
  * @file    main.c
- * @brief	Main entry point for waveform generation.
+ * @brief	Entry point of the BME280 Weather Station application.
  *
  * @author  Venetia Furtado
- * @date    11/18/2025
+ * @date    12/02/2025
  * References:
- * 1. https://github.com/alexander-g-dean/ESF/tree/master/ST/Code/ch6
- * 2. Embedded Systems Fundamentals with Arm Cortex-M based Microcontrollers (Chapters 6 and 9) - Alexander Dean
- * 3. RM0091 Reference manual - Chapter 10 (DMA), Chapter 13 (ADC), Chapter 14 (DAC), Chapter 21(TIM6/TIM7)
+ * 1. https://github.com/alexander-g-dean/ESF/tree/master/ST/Code/
+ * 2. Embedded Systems Fundamentals with Arm Cortex-M based Microcontrollers - Alexander Dean
+ * 3. RM0091 Reference manual
  * 4. RM0091 Reference manual - Appendix code examples
- * 5. https://blog.embeddedexpert.io/?p=1196
- * 6. https://community.st.com/t5/stm32-mcus-products/problem-with-dac-dma-end-of-transmission-interrupts-on/td-p/756774
+ * 5. BME280 Datasheet
  * 
  **/
 #include <stdio.h>
@@ -41,104 +40,34 @@
 #include "systick.h"
 #include "pwm.h"
 #include "log.h"
-
-#define WAIT_TIME_PER_ITERATION          (3000)
-
-void delay(volatile unsigned int time_del)
-{
-   //INFO_LOG("Starting delay timer for %d ms", time_del);
-        volatile int n;
-        while (time_del--)
-        {
-                n = WAIT_TIME_PER_ITERATION; /*No. of iterations to give approximate delay in order of milliseconds*/
-                while (n--);
-        }
-}
+#include "timer.h"
 
 
 /**
- * @brief 	Initializes all peripherals required for waveform generation and analog
- * 			sampling. Once initialization is complete, the function enters an infinite loop 
- * 			where analog_in() is repeatedly called to process incoming analog signals.
+ * @brief 	Entry point of the BME280 Weather Station application.
+ * 
+ * This function initializes all required hardware peripherals,
+ * configures the system resources, and starts the finite state
+ * machine (FSM). Depending on the build configuration, it sets up
+ * either SPI or I2C communication for the BME280 sensor.
  *
  */
 int main(void)
 {
-#if 1
-#ifdef DO_SPI
+#ifdef RUN_WITH_SPI
 	Init_SPI2();
 #else
 	I2C_Init();
 #endif
 	PWM_Init();
 	BME280_Init();
-	PWM_Init();
-	init_switch();
+	Init_switch();
 	Init_DataAcquisition();
 	Init_FSM();
 	init_systick();
 	Init_TIM7();
+	STATE_TRANSITION_LOG("NORMAL state");
+	run_FSM();
 
-	STATE_TRANSITION_LOG("Entering NORMAL state");
-
-	ticktime_t tick_counter = 0;
-	while (1)
-	{
-		if (tick_counter != get_current_tick())
-		{
-			FSM();
-			tick_counter = get_current_tick();
-		}
-	}
-#endif
-
-#if 0
-	while (1)
-	{
-		printf("SPI = %x\n\r", SPI_Read(0xD0));
-		BME280_Data data;
-
-		BME280_ReadAll(&data);
-
-		printf("Read values: Temp %f Pressure %f Humidity %f\n\r",
-				 data.temperature,
-				 data.pressure,
-				 data.humidity);
-
-		delay(1000);
-	}
-#endif
-#if 0
-	I2C_Init();
-	delay(500);
-	printf("\rhello world!!\n\r");
-	while (1)
-	{
-		uint8_t read_val = 0xB6;
-		I2C_WriteReg(0x76, 0xE0, &read_val, 1);
-		// Wait for reset to complete
-		for (volatile int i = 0; i < 100000; i++)
-			;
-		I2C_ReadReg(0x76, 0xD0, &read_val, 1);
-		printf("I2C = %x\n\r", read_val);
-		delay(500);
-	}
-#endif
-
-#if 0
-	i2cInitGpio();
-	delay(500);
-	uint8_t read_val = 0;
-	printf("\rhello world!!\n\r");
-
-	sendControlByte(READ, 0xEC);
-	read_val = i2cByteRead();
-	// i2cByteWrite(0x76, 0xD0, &read_val, 1);
-
-	// I2C_ReadReg(0x76, 0xD0, &read_val, 1);
-	printf("I2C = %x\n\r", read_val);
-	delay(500);
-	while(1);
-#endif
 	return 0;
 }
