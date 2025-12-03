@@ -14,7 +14,7 @@
 
 /**
  * @file    pwm.h
- * @brief   Header file for PWM-based LED control.
+ * @brief   Header file for PWM-based ULED control.
  * @author  Venetia Furtado
  * @date    12/02/2025
  *

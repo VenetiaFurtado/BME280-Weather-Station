@@ -17,7 +17,7 @@
  * its interrupts, and manage a global time counter (time_var).
  * 
  * @author  Venetia Furtado
- * @date    10/06/2025
+ * @date    12/02/2025
  *
  */
 #include <stdio.h>

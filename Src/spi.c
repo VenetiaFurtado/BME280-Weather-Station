@@ -11,10 +11,9 @@
 /**
  * @file    spi.c
  * @brief	SPI2 peripheral driver and utility functions.
- *          Provides initialization, byte transfer,
- *          loopback test, and command interface support.
+ *         
  * @author  Venetia Furtado
- * @date    11/03/2025
+ * @date    12/02/2025
  * Reference:
  * 1. https://github.com/alexander-g-dean/ESF/blob/master/ST/Code/ch8/SPI/main.c
  */
@@ -40,7 +39,7 @@
  * Configures GPIOB pins 12–15 for SPI2 alternate function (NSS, SCK, MISO, MOSI),
  * sets SPI2 as master with 12 MHz clock, CPOL=1, CPHA=0, MSB-first, 8-bit data,
  * and enables automatic NSS management.
- * @note: code referenced from:
+ * Code referenced from:
  * https://github.com/alexander-g-dean/ESF/blob/master/ST/Code/ch8/SPI/main.c
  */
 void Init_SPI2(void)
@@ -122,6 +121,16 @@ uint8_t SPI_Send_Receive_Byte(uint8_t d_out)
    return d_in;
 }
 
+/**
+ * @brief Reads a single byte from a specified SPI register.
+ *
+ * This function enables the SPI2 peripheral, sends the register address,
+ * receives the data byte from the SPI slave, and then disables the SPI2
+ * peripheral.
+ *
+ * @param[in] register_addr  Address of the register to read from.
+ * @return uint8_t           Value read from the specified register.
+ */
 uint8_t SPI_Read(const uint8_t register_addr)
 {
    uint8_t val = 0;
@@ -136,6 +145,17 @@ uint8_t SPI_Read(const uint8_t register_addr)
    return val;
 }
 
+/**
+ * @brief Writes a single byte to a specified SPI register.
+ *
+ * This function enables the SPI2 peripheral, sends the register address,
+ * writes the provided data byte to the SPI slave, and then disables the SPI2
+ * peripheral. The function returns the value received during the last SPI transfer.
+ *
+ * @param[in] register_addr  Address of the register to write to.
+ * @param[in] data           Data byte to write to the register.
+ * @return uint8_t           Value received from the SPI slave during the transfer.
+ */
 uint8_t SPI_Write(const uint8_t register_addr, const uint8_t data)
 {
    uint8_t val = 0;
@@ -148,29 +168,4 @@ uint8_t SPI_Write(const uint8_t register_addr, const uint8_t data)
    MODIFY_FIELD(SPI2->CR1, SPI_CR1_SPE, 0);
 
    return val;
-}
-
-/**
- * @brief Continuously tests SPI2 in loopback mode.
- *
- * Sends a byte over SPI2 and checks if the received byte matches
- * the transmitted byte. Prints the received character if successful,
- * or an error message if a mismatch occurs.
- */
-void Test_SPI_Loopback(void)
-{
-   uint8_t out = 'A';
-   uint8_t in;
-
-   while (1)
-   {
-      in = SPI_Send_Receive_Byte(out);
-      if (in != out)
-         printf("SPI Error \n\r");
-      else
-         printf("%c", in);
-      out++;
-      if (out > 'z')
-         out = 'A';
-   }
 }

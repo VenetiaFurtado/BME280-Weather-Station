@@ -1,3 +1,11 @@
+/**
+ * @file    timer.c
+ * @brief   TIM7 initialization and interrupt handling for LED blinking.
+ * 
+ * @author  Venetia Furtado
+ * @date    12/02/2025
+ *
+ */
 #include <stm32f091xc.h>
 #include <stdio.h>
 #include <stdbool.h>

@@ -22,7 +22,7 @@
  *    activation events (was_switch_activated()).
  * 
  * @author  Venetia Furtado
- * @date    10/06/2025
+ * @date    12/02/2025
  *
  */
 #include <stm32f091xc.h>

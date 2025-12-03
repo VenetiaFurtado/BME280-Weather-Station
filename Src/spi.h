@@ -14,11 +14,9 @@
 /**
  * @file    spi.h
  * @brief	Header file for SPI2 peripheral driver.
- *          Declares initialization, full-duplex byte transfer,
- *          and loopback test functions.
  *
  * @author  Venetia Furtado
- * @date    11/03/2025
+ * @date    12/02/2025
  *
  */
 

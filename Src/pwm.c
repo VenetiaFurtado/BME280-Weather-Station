@@ -11,7 +11,8 @@
 
 /**
  * @file    pwm.c
- * @brief 
+ * @brief 	This file provides functions to initialize and configure a PWM output
+ * using TIM2 Channel 1 on PA5. The PWM can be used to control ULED brightness.
  *
  * @author  Venetia Furtado
  * @date    12/02/2025
@@ -29,6 +30,10 @@
 #define PWM_BRIGHTNESS_INTERVAL (PWM_MAX_DUTY_VALUE / 255)
 #define PWM_PRESCALER (2)
 #define PWM_MODE_1 (6U << 4)
+#define CLEAR_MODE_BITS (3U << (5 * 2))
+#define SET_TO_ALT_FUNC_MODE (2U << (5 * 2))
+#define CLEAR_ALT_FUNC_BITS (0xF << (5 * 4))
+#define ALT_FUNC_TIM2CH1 (2U << (5 * 4))
 
 uint8_t current_brightness_level = MAXIMUM_LED_BRIGHTNESS;
 
@@ -56,10 +61,10 @@ void PWM_Init(void)
 	RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
 
 	// Configure PA5 as alternate function (TIM2_CH1)
-	GPIOA->MODER &= ~(3U << (5 * 2));	// Clear mode bits
-	GPIOA->MODER |= (2U << (5 * 2));		// Set to alternate function mode
-	GPIOA->AFR[0] &= ~(0xF << (5 * 4)); // Clear alternate function bits
-	GPIOA->AFR[0] |= (2U << (5 * 4));	// AF2 for TIM2_CH1
+	GPIOA->MODER &= ~CLEAR_MODE_BITS;	// Clear mode bits
+	GPIOA->MODER |= SET_TO_ALT_FUNC_MODE;		// Set to alternate function mode
+	GPIOA->AFR[0] &= ~CLEAR_ALT_FUNC_BITS; // Clear alternate function bits
+	GPIOA->AFR[0] |= ALT_FUNC_TIM2CH1;	// AF2 for TIM2_CH1
 
 	// Configure TIM2
 	// Assuming system clock = 48 MHz
