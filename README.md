@@ -23,19 +23,19 @@ all test results presented correspond to configurations with I2C interfacing ena
 ## Code structure
 This project is structured into several software modules that work together to 
 read environmental data from the BME280 sensor, process it, and update the LED 
-indicator (LD2) and terminal output based on system state.
+indicator (LD2) and terminal output based on system state.  
 `main()` - Serves as the entry point of the firmware is responsible for the 
 initialization and execution of all peripherals and system modules. The structure 
 is modular, with each function responsible for a specific hardware or software component.
 
-**Communication Interface Initialization**
+**Communication Interface Initialization**  
 `I2C_Init()`: Sets up the I2C1 peripheral, configures GPIO pins, timing, and the BME280 interface.
 
-**PWM Initialization**
+**PWM Initialization**  
 `PWM_Init()`: Initializes PWM output on PA5 using TIM2 Channel 1 with a 50% duty cycle
 and and PWM frequency of 1 kHz.
 
-**BME280 Sensor Initialization**
+**BME280 Sensor Initialization**  
 `BME280_Init()`: The BME280_Init() function initializes the BME280 sensor and 
 prepares it for measurement. It first verifies the sensor by reading the chip ID 
 (0x60) and performs a soft reset to ensure proper startup. Calibration data for 
@@ -47,35 +47,35 @@ oversampling for temperature, pressure, and humidity, standby time set to 0.5 
 and the internal filter disabled. The function returns a success code once the 
 sensor is ready, ensuring accurate and reliable readings.
 
-**Data acquisition setup**
+**Data acquisition setup**  
 `Init_DataAcquisition()`: Initializes the data acquisition module. Sets up 
 buffers, I2C read routines, or data logging structures.
 
-**FSM initialization**
+**FSM initialization**  
 `Init_FSM()`: Sets up the FSM controlling system states (e.g., NORMAL, EMERGENCY, USER).
 Prepares state variables, timers, and transition rules.
 
-**System Tick Timer**
+**System Tick Timer**  
 `init_systick()`: Configures the SysTick timer for periodic interrupts. Used for 
 timing delays, periodic sensor reads, or updating system states.
 
-**TIM7 Initilization**
+**TIM7 Initilization**  
 `Init_TIM7()`: Configures TIM7 for LED blinking.
 
-**Logging**
+**Logging**  
 `log.h`: Logs the initial state of the system to the UART terminal. Provides 
 feedback for debugging and monitoring state transitions.
 
-**FSM execution**
+**FSM execution**  
 `run_FSM()`: Starts the main FSM loop. Handles transitions between NORMAL, USER 
 and EMERGENCY states based on sensor readings and inputs.
 
-## Data Acquisition Module (`data_acquisition.c`)
+## Data Acquisition Module (`data_acquisition.c`)  
 The system continuously collects sensor readings each system tick. It uses 
 `I2C_ReadReg`/`I2C_WriteReg` for register-level communication. A circular buffer
 is used to store the last 60 samples. It also maintains a running average without iterating 
 over the buffer.
-**Core function**
+**Core function**  
 ```
 void acquire_data(BME280_Data* data)
 {
@@ -98,24 +98,24 @@ void acquire_data(BME280_Data* data)
 }
 ```
 
-## Finite State Machine (FSM)
+## Finite State Machine (FSM)  
 The FSM has three states:
-**State:NORMAL**
+**State:NORMAL**  
 - Logs current sensor readings.
 - Checks for switch activation -> transitions to `USER`.
 - Checks for high temperature -> transitions to `EMERGENCY`.
 
-**State:EMERGENCY**
+**State:EMERGENCY**  
 - Logs high-temperature warning.
 - Switch activation transitions to -> `USER`.
 - Temperature drops below threshold transitions to -> `NORMAL`.
 
-**State:USER**
+**State:USER**  
 - Logs moving average temperature from the circular buffer.
 - Temperature exceeds threshold transitions to -> `EMERGENCY`.
 - Else returns to `NORMAL`.
 
-**FSM operation**
+**FSM operation**  
 `run_FSM()` ensures the FSM executes once per tick:
 ```
 void run_FSM()
@@ -133,7 +133,7 @@ void run_FSM()
 ```
 
 ## LED Control System
-**Brightness**
+**Brightness**  
 ```
 /**
  * @brief Defines predefined brightness levels for the ULED(LD2).
@@ -224,7 +224,7 @@ uint16_t blink_frequency()
 }
 ```
 
-## Timer module (`timer.c`)
+## Timer module (`timer.c`)  
 Used to generate interrupts to cause LED blinking effect:
 ```
 void TIM7_IRQHandler(void)
@@ -239,8 +239,8 @@ void TIM7_IRQHandler(void)
 }
 ```
 
-## I2C Driver (`i2c.c`)
-Initializes the I2C1 peripheral for communication with the BME280 sensor. 
+## I2C Driver (`i2c.c`)  
+Initializes the I2C1 peripheral for communication with the BME280 sensor.  
 This `I2C_Init` function configures the I2C1 peripheral and associated GPIO pins
 on STM32F0 for standard mode (100 kHz) operation. It performs the following steps:
 - Enables clock gating for I2C1 and GPIO port B.
