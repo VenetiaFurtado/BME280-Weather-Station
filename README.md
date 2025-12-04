@@ -13,6 +13,7 @@ A circular buffer stores recent temperature samples to maintain a running averag
 LED behavior, including blink rate and brightness is controlled via TIM7 and PWM 
 (TIM2) to visually indicate system state. Peripheral drivers were implemented in 
 bare-metal C for I2C, SPI, timers, PWM, and GPIO.
+
 **NOTE:** The sensor’s I2C communication did not function correctly at first. 
 Due to time constraints, the project was completed using the SPI interface as a 
 fallback. I later resolved the I2C read/write issues, but the SPI interface 
@@ -75,6 +76,7 @@ The system continuously collects sensor readings each system tick. It uses
 `I2C_ReadReg`/`I2C_WriteReg` for register-level communication. A circular buffer
 is used to store the last 60 samples. It also maintains a running average without iterating 
 over the buffer.
+
 **Core function**  
 ```
 void acquire_data(BME280_Data* data)
