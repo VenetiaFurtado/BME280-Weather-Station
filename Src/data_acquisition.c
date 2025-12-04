@@ -14,6 +14,8 @@
 #include "utilities.h"
 #include "log.h"
 
+#define NUM_SAMPLES 60
+
 BufferType data_buffer;
 double running_sum_temp;
 float avg_temp;
@@ -54,7 +56,7 @@ void acquire_data(BME280_Data* data)
 
    running_sum_temp += data->temperature;
 
-   if(cbfifo_length(&data_buffer) == 60)
+   if(cbfifo_length(&data_buffer) == NUM_SAMPLES)
    {
       BME280_Data old_sample;
       read_from_buffer(&data_buffer, &old_sample);

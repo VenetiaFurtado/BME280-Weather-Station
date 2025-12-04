@@ -104,7 +104,7 @@ int read_from_buffer(BufferType* bufferLog, BME280_Data* c)
       return ERROR;
    }
 
-   // put value ofbuffer tail into c
+   // put value of buffer tail into c
    *c = bufferLog->buffer[bufferLog->tail];
    bufferLog->tail++;
 

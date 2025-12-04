@@ -2764,7 +2764,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_rnglists
                 0x00000287       0x26 ../Lib/libstm_startup.a(terminal.o)
 
-.debug_macro    0x00000000    0x155f3
+.debug_macro    0x00000000    0x155f9
  .debug_macro   0x00000000       0xcf ./Src/bme280.o
  .debug_macro   0x000000cf      0xac0 ./Src/bme280.o
  .debug_macro   0x00000b8f       0x22 ./Src/bme280.o
@@ -2775,86 +2775,86 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_macro   0x00000dfd      0x1df ./Src/bme280.o
  .debug_macro   0x00000fdc       0x92 ./Src/buffer.o
  .debug_macro   0x0000106e       0x22 ./Src/buffer.o
- .debug_macro   0x00001090      0x1c0 ./Src/data_acquisition.o
- .debug_macro   0x00001250       0x22 ./Src/data_acquisition.o
- .debug_macro   0x00001272       0x1c ./Src/data_acquisition.o
- .debug_macro   0x0000128e       0x22 ./Src/data_acquisition.o
- .debug_macro   0x000012b0       0xdd ./Src/data_acquisition.o
- .debug_macro   0x0000138d      0x391 ./Src/data_acquisition.o
- .debug_macro   0x0000171e    0x10e4f ./Src/data_acquisition.o
- .debug_macro   0x0001256d       0x61 ./Src/data_acquisition.o
- .debug_macro   0x000125ce       0x24 ./Src/data_acquisition.o
- .debug_macro   0x000125f2       0x43 ./Src/data_acquisition.o
- .debug_macro   0x00012635       0x34 ./Src/data_acquisition.o
- .debug_macro   0x00012669       0x16 ./Src/data_acquisition.o
- .debug_macro   0x0001267f       0x9e ./Src/data_acquisition.o
- .debug_macro   0x0001271d      0x370 ./Src/data_acquisition.o
- .debug_macro   0x00012a8d      0x112 ./Src/data_acquisition.o
- .debug_macro   0x00012b9f       0x10 ./Src/data_acquisition.o
- .debug_macro   0x00012baf       0x16 ./Src/data_acquisition.o
- .debug_macro   0x00012bc5       0x4a ./Src/data_acquisition.o
- .debug_macro   0x00012c0f       0x34 ./Src/data_acquisition.o
- .debug_macro   0x00012c43       0x10 ./Src/data_acquisition.o
- .debug_macro   0x00012c53       0x58 ./Src/data_acquisition.o
- .debug_macro   0x00012cab       0x8e ./Src/data_acquisition.o
- .debug_macro   0x00012d39       0x1c ./Src/data_acquisition.o
- .debug_macro   0x00012d55      0x185 ./Src/data_acquisition.o
- .debug_macro   0x00012eda       0x16 ./Src/data_acquisition.o
- .debug_macro   0x00012ef0       0x16 ./Src/data_acquisition.o
- .debug_macro   0x00012f06      0x146 ./Src/data_acquisition.o
- .debug_macro   0x0001304c       0x10 ./Src/data_acquisition.o
- .debug_macro   0x0001305c       0x2e ./Src/data_acquisition.o
- .debug_macro   0x0001308a       0x22 ./Src/data_acquisition.o
- .debug_macro   0x000130ac      0x199 ./Src/fsm.o
- .debug_macro   0x00013245       0x1c ./Src/fsm.o
- .debug_macro   0x00013261       0x16 ./Src/fsm.o
- .debug_macro   0x00013277      0x191 ./Src/i2c.o
- .debug_macro   0x00013408      0x1a4 ./Src/main.o
- .debug_macro   0x000135ac       0x5b ./Src/main.o
- .debug_macro   0x00013607       0x94 ./Src/main.o
- .debug_macro   0x0001369b       0x57 ./Src/main.o
- .debug_macro   0x000136f2       0x10 ./Src/main.o
- .debug_macro   0x00013702      0x204 ./Src/pwm.o
- .debug_macro   0x00013906       0x16 ./Src/pwm.o
- .debug_macro   0x0001391c       0x3c ./Src/pwm.o
- .debug_macro   0x00013958       0x16 ./Src/pwm.o
- .debug_macro   0x0001396e       0x29 ./Src/pwm.o
- .debug_macro   0x00013997      0x1d0 ./Src/switch.o
- .debug_macro   0x00013b67      0x274 ./Src/syscalls.o
- .debug_macro   0x00013ddb      0x190 ./Src/syscalls.o
- .debug_macro   0x00013f6b       0x10 ./Src/syscalls.o
- .debug_macro   0x00013f7b       0x10 ./Src/syscalls.o
- .debug_macro   0x00013f8b       0x10 ./Src/syscalls.o
- .debug_macro   0x00013f9b       0x10 ./Src/syscalls.o
- .debug_macro   0x00013fab       0x1c ./Src/syscalls.o
- .debug_macro   0x00013fc7       0x52 ./Src/syscalls.o
- .debug_macro   0x00014019       0x22 ./Src/syscalls.o
- .debug_macro   0x0001403b       0x10 ./Src/syscalls.o
- .debug_macro   0x0001404b       0x52 ./Src/syscalls.o
- .debug_macro   0x0001409d       0xcf ./Src/syscalls.o
- .debug_macro   0x0001416c       0x1c ./Src/syscalls.o
- .debug_macro   0x00014188       0x3d ./Src/syscalls.o
- .debug_macro   0x000141c5       0x35 ./Src/syscalls.o
- .debug_macro   0x000141fa      0x12c ./Src/syscalls.o
- .debug_macro   0x00014326       0x10 ./Src/syscalls.o
- .debug_macro   0x00014336      0x242 ./Src/syscalls.o
- .debug_macro   0x00014578       0x1c ./Src/syscalls.o
- .debug_macro   0x00014594       0x10 ./Src/syscalls.o
- .debug_macro   0x000145a4      0x18a ./Src/syscalls.o
- .debug_macro   0x0001472e       0x16 ./Src/syscalls.o
- .debug_macro   0x00014744       0xce ./Src/syscalls.o
- .debug_macro   0x00014812      0x112 ./Src/sysmem.o
- .debug_macro   0x00014924      0x23c ./Src/sysmem.o
- .debug_macro   0x00014b60      0x1b4 ./Src/systick.o
- .debug_macro   0x00014d14      0x1af ./Src/timer.o
- .debug_macro   0x00014ec3       0xc0 ./Startup/startup_stm32f091rctx.o
- .debug_macro   0x00014f83       0x28 ./Startup/startup_stm32f091rctx.o
- .debug_macro   0x00014fab       0x66 ./Startup/startup_stm32f091rctx.o
- .debug_macro   0x00015011      0x18c ../Lib/libstm_startup.a(clock.o)
- .debug_macro   0x0001519d      0x1bd ../Lib/libstm_startup.a(system_stm32f0xx.o)
- .debug_macro   0x0001535a       0x8e ../Lib/libstm_startup.a(system_stm32f0xx.o)
- .debug_macro   0x000153e8       0x61 ../Lib/libstm_startup.a(system_stm32f0xx.o)
- .debug_macro   0x00015449      0x1aa ../Lib/libstm_startup.a(terminal.o)
+ .debug_macro   0x00001090      0x1c6 ./Src/data_acquisition.o
+ .debug_macro   0x00001256       0x22 ./Src/data_acquisition.o
+ .debug_macro   0x00001278       0x1c ./Src/data_acquisition.o
+ .debug_macro   0x00001294       0x22 ./Src/data_acquisition.o
+ .debug_macro   0x000012b6       0xdd ./Src/data_acquisition.o
+ .debug_macro   0x00001393      0x391 ./Src/data_acquisition.o
+ .debug_macro   0x00001724    0x10e4f ./Src/data_acquisition.o
+ .debug_macro   0x00012573       0x61 ./Src/data_acquisition.o
+ .debug_macro   0x000125d4       0x24 ./Src/data_acquisition.o
+ .debug_macro   0x000125f8       0x43 ./Src/data_acquisition.o
+ .debug_macro   0x0001263b       0x34 ./Src/data_acquisition.o
+ .debug_macro   0x0001266f       0x16 ./Src/data_acquisition.o
+ .debug_macro   0x00012685       0x9e ./Src/data_acquisition.o
+ .debug_macro   0x00012723      0x370 ./Src/data_acquisition.o
+ .debug_macro   0x00012a93      0x112 ./Src/data_acquisition.o
+ .debug_macro   0x00012ba5       0x10 ./Src/data_acquisition.o
+ .debug_macro   0x00012bb5       0x16 ./Src/data_acquisition.o
+ .debug_macro   0x00012bcb       0x4a ./Src/data_acquisition.o
+ .debug_macro   0x00012c15       0x34 ./Src/data_acquisition.o
+ .debug_macro   0x00012c49       0x10 ./Src/data_acquisition.o
+ .debug_macro   0x00012c59       0x58 ./Src/data_acquisition.o
+ .debug_macro   0x00012cb1       0x8e ./Src/data_acquisition.o
+ .debug_macro   0x00012d3f       0x1c ./Src/data_acquisition.o
+ .debug_macro   0x00012d5b      0x185 ./Src/data_acquisition.o
+ .debug_macro   0x00012ee0       0x16 ./Src/data_acquisition.o
+ .debug_macro   0x00012ef6       0x16 ./Src/data_acquisition.o
+ .debug_macro   0x00012f0c      0x146 ./Src/data_acquisition.o
+ .debug_macro   0x00013052       0x10 ./Src/data_acquisition.o
+ .debug_macro   0x00013062       0x2e ./Src/data_acquisition.o
+ .debug_macro   0x00013090       0x22 ./Src/data_acquisition.o
+ .debug_macro   0x000130b2      0x199 ./Src/fsm.o
+ .debug_macro   0x0001324b       0x1c ./Src/fsm.o
+ .debug_macro   0x00013267       0x16 ./Src/fsm.o
+ .debug_macro   0x0001327d      0x191 ./Src/i2c.o
+ .debug_macro   0x0001340e      0x1a4 ./Src/main.o
+ .debug_macro   0x000135b2       0x5b ./Src/main.o
+ .debug_macro   0x0001360d       0x94 ./Src/main.o
+ .debug_macro   0x000136a1       0x57 ./Src/main.o
+ .debug_macro   0x000136f8       0x10 ./Src/main.o
+ .debug_macro   0x00013708      0x204 ./Src/pwm.o
+ .debug_macro   0x0001390c       0x16 ./Src/pwm.o
+ .debug_macro   0x00013922       0x3c ./Src/pwm.o
+ .debug_macro   0x0001395e       0x16 ./Src/pwm.o
+ .debug_macro   0x00013974       0x29 ./Src/pwm.o
+ .debug_macro   0x0001399d      0x1d0 ./Src/switch.o
+ .debug_macro   0x00013b6d      0x274 ./Src/syscalls.o
+ .debug_macro   0x00013de1      0x190 ./Src/syscalls.o
+ .debug_macro   0x00013f71       0x10 ./Src/syscalls.o
+ .debug_macro   0x00013f81       0x10 ./Src/syscalls.o
+ .debug_macro   0x00013f91       0x10 ./Src/syscalls.o
+ .debug_macro   0x00013fa1       0x10 ./Src/syscalls.o
+ .debug_macro   0x00013fb1       0x1c ./Src/syscalls.o
+ .debug_macro   0x00013fcd       0x52 ./Src/syscalls.o
+ .debug_macro   0x0001401f       0x22 ./Src/syscalls.o
+ .debug_macro   0x00014041       0x10 ./Src/syscalls.o
+ .debug_macro   0x00014051       0x52 ./Src/syscalls.o
+ .debug_macro   0x000140a3       0xcf ./Src/syscalls.o
+ .debug_macro   0x00014172       0x1c ./Src/syscalls.o
+ .debug_macro   0x0001418e       0x3d ./Src/syscalls.o
+ .debug_macro   0x000141cb       0x35 ./Src/syscalls.o
+ .debug_macro   0x00014200      0x12c ./Src/syscalls.o
+ .debug_macro   0x0001432c       0x10 ./Src/syscalls.o
+ .debug_macro   0x0001433c      0x242 ./Src/syscalls.o
+ .debug_macro   0x0001457e       0x1c ./Src/syscalls.o
+ .debug_macro   0x0001459a       0x10 ./Src/syscalls.o
+ .debug_macro   0x000145aa      0x18a ./Src/syscalls.o
+ .debug_macro   0x00014734       0x16 ./Src/syscalls.o
+ .debug_macro   0x0001474a       0xce ./Src/syscalls.o
+ .debug_macro   0x00014818      0x112 ./Src/sysmem.o
+ .debug_macro   0x0001492a      0x23c ./Src/sysmem.o
+ .debug_macro   0x00014b66      0x1b4 ./Src/systick.o
+ .debug_macro   0x00014d1a      0x1af ./Src/timer.o
+ .debug_macro   0x00014ec9       0xc0 ./Startup/startup_stm32f091rctx.o
+ .debug_macro   0x00014f89       0x28 ./Startup/startup_stm32f091rctx.o
+ .debug_macro   0x00014fb1       0x66 ./Startup/startup_stm32f091rctx.o
+ .debug_macro   0x00015017      0x18c ../Lib/libstm_startup.a(clock.o)
+ .debug_macro   0x000151a3      0x1bd ../Lib/libstm_startup.a(system_stm32f0xx.o)
+ .debug_macro   0x00015360       0x8e ../Lib/libstm_startup.a(system_stm32f0xx.o)
+ .debug_macro   0x000153ee       0x61 ../Lib/libstm_startup.a(system_stm32f0xx.o)
+ .debug_macro   0x0001544f      0x1aa ../Lib/libstm_startup.a(terminal.o)
 
 .debug_line     0x00000000     0x6244
  .debug_line    0x00000000      0x72b ./Src/bme280.o
@@ -2874,24 +2874,24 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_line    0x00005496      0x6f9 ../Lib/libstm_startup.a(system_stm32f0xx.o)
  .debug_line    0x00005b8f      0x6b5 ../Lib/libstm_startup.a(terminal.o)
 
-.debug_str      0x00000000    0x69a53
- .debug_str     0x00000000    0x69a53 ./Src/bme280.o
+.debug_str      0x00000000    0x69a62
+ .debug_str     0x00000000    0x69a62 ./Src/bme280.o
                                0x4081 (size before relaxing)
- .debug_str     0x00069a53     0x3e4d ./Src/buffer.o
- .debug_str     0x00069a53    0x66119 ./Src/data_acquisition.o
- .debug_str     0x00069a53     0x7b8c ./Src/fsm.o
- .debug_str     0x00069a53    0x65f4f ./Src/i2c.o
- .debug_str     0x00069a53     0x7a9d ./Src/main.o
- .debug_str     0x00069a53    0x661d9 ./Src/pwm.o
- .debug_str     0x00069a53    0x66364 ./Src/switch.o
- .debug_str     0x00069a53     0x990e ./Src/syscalls.o
- .debug_str     0x00069a53     0x76ac ./Src/sysmem.o
- .debug_str     0x00069a53    0x660c1 ./Src/systick.o
- .debug_str     0x00069a53    0x66239 ./Src/timer.o
- .debug_str     0x00069a53    0x62897 ./Startup/startup_stm32f091rctx.o
- .debug_str     0x00069a53    0x65cb8 ../Lib/libstm_startup.a(clock.o)
- .debug_str     0x00069a53    0x662dc ../Lib/libstm_startup.a(system_stm32f0xx.o)
- .debug_str     0x00069a53    0x663b6 ../Lib/libstm_startup.a(terminal.o)
+ .debug_str     0x00069a62     0x3e4d ./Src/buffer.o
+ .debug_str     0x00069a62    0x66128 ./Src/data_acquisition.o
+ .debug_str     0x00069a62     0x7b8c ./Src/fsm.o
+ .debug_str     0x00069a62    0x65f4f ./Src/i2c.o
+ .debug_str     0x00069a62     0x7a9d ./Src/main.o
+ .debug_str     0x00069a62    0x661d9 ./Src/pwm.o
+ .debug_str     0x00069a62    0x66364 ./Src/switch.o
+ .debug_str     0x00069a62     0x990e ./Src/syscalls.o
+ .debug_str     0x00069a62     0x76ac ./Src/sysmem.o
+ .debug_str     0x00069a62    0x660c1 ./Src/systick.o
+ .debug_str     0x00069a62    0x66239 ./Src/timer.o
+ .debug_str     0x00069a62    0x62897 ./Startup/startup_stm32f091rctx.o
+ .debug_str     0x00069a62    0x65cb8 ../Lib/libstm_startup.a(clock.o)
+ .debug_str     0x00069a62    0x662dc ../Lib/libstm_startup.a(system_stm32f0xx.o)
+ .debug_str     0x00069a62    0x663b6 ../Lib/libstm_startup.a(terminal.o)
 
 .comment        0x00000000       0x86
  .comment       0x00000000       0x86 ./Src/bme280.o
