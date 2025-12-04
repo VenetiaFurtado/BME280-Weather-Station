@@ -264,12 +264,14 @@ It performs the following steps:
 - Reads the specified number of bytes into the provided buffer.
 - Issues a STOP condition to end the transaction.
 
-## Observed output
-**Hardware setup**
+## Observed output  
+**Hardware setup**  
 ![setup](setup.png)
 
-**Sensor output**
+**Sensor output**  
 ![state_transitions](state_transitions.png)
+
+
 ![high_temp_warning](high_temp_warning.png)
 
 **I2C Read**
