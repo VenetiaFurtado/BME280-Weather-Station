@@ -99,7 +99,7 @@ void acquire_data(BME280_Data* data)
 ```
 
 ## Finite State Machine (FSM)  
-The FSM has three states:
+The FSM has three states:  
 **State:NORMAL**  
 - Logs current sensor readings.
 - Checks for switch activation -> transitions to `USER`.
